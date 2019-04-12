@@ -15,27 +15,28 @@
  */
 package org.wso2.charon3.core.protocol.endpoints;
 
-import org.json.JSONException;
-import org.wso2.charon3.core.attributes.MultiValuedAttribute;
-import org.wso2.charon3.core.attributes.SimpleAttribute;
-import org.wso2.charon3.core.encoder.JSONDecoder;
-import org.wso2.charon3.core.encoder.JSONEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wso2.charon3.core.config.ResourceTypeRegistration;
+import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.BadRequestException;
 import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.exceptions.InternalErrorException;
 import org.wso2.charon3.core.exceptions.NotFoundException;
 import org.wso2.charon3.core.extensions.ResourceHandler;
 import org.wso2.charon3.core.objects.AbstractSCIMObject;
+import org.wso2.charon3.core.objects.ListedResource;
 import org.wso2.charon3.core.protocol.ResponseCodeConstants;
 import org.wso2.charon3.core.protocol.SCIMResponse;
+import org.wso2.charon3.core.resourcetypes.ResourceType;
 import org.wso2.charon3.core.schema.SCIMConstants;
-import org.wso2.charon3.core.schema.SCIMResourceSchemaManager;
-import org.wso2.charon3.core.schema.SCIMResourceTypeSchema;
-import org.wso2.charon3.core.schema.ServerSideValidator;
-import org.wso2.charon3.core.utils.CopyUtil;
+import org.wso2.charon3.core.utils.LambdaExceptionUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static org.wso2.charon3.core.schema.ServerSideValidator.validateResourceTypeSCIMObject;
 
 /**
  * The "RESOURCE_TYPES" schema specifies the metadata about a resource type. This is the spec compatible version of
@@ -48,7 +49,9 @@ public class ResourceTypeResourceManager extends ResourceManager {
         super(resourceHandler);
     }
 
-    /*
+    private static final Logger log = LoggerFactory.getLogger(ResourceTypeResourceManager.class);
+
+    /**
      * Retrieves a resource type
      *
      * @return SCIM response to be returned.
@@ -59,72 +62,42 @@ public class ResourceTypeResourceManager extends ResourceManager {
         return getResourceType();
     }
 
-    /*
+    /**
      * return RESOURCE_TYPE schema
-     *
-     * @return
      */
     private SCIMResponse getResourceType() {
 
-        JSONEncoder encoder = null;
         try {
-            //obtain the json encoder
-            encoder = getEncoder();
-            //obtain the json decoder
-            JSONDecoder decoder = getDecoder();
-
-            // get the service provider config schema
-            SCIMResourceTypeSchema schema = SCIMResourceSchemaManager.getInstance().getResourceTypeResourceSchema();
-            //create a string in json format for user resource type with relevant values
-            String scimUserObjectString = encoder.buildUserResourceTypeJsonBody();
-            //create a string in json format for group resource type with relevant values
-            String scimGroupObjectString = encoder.buildGroupResourceTypeJsonBody();
-            //build the user abstract scim object
-            AbstractSCIMObject userResourceTypeObject =
-                (AbstractSCIMObject) decoder.decodeResource(scimUserObjectString, schema, new AbstractSCIMObject());
-            //add meta data
-            userResourceTypeObject = ServerSideValidator.validateResourceTypeSCIMObject(userResourceTypeObject);
-            //build the group abstract scim object
-            AbstractSCIMObject groupResourceTypeObject =
-                (AbstractSCIMObject) decoder.decodeResource(scimGroupObjectString, schema, new AbstractSCIMObject());
-            //add meta data
-            groupResourceTypeObject = ServerSideValidator.validateResourceTypeSCIMObject(groupResourceTypeObject);
-            //build the root abstract scim object
-            AbstractSCIMObject resourceTypeObject =
-                buildCombinedResourceType(userResourceTypeObject, groupResourceTypeObject);
+            List<ResourceType> copiedResourceTypes = ResourceTypeRegistration.getResourceTypeListCopy();
+            copiedResourceTypes.forEach(resourceType -> {
+                LambdaExceptionUtils.rethrowConsumer(rt -> validateResourceTypeSCIMObject((AbstractSCIMObject) rt))
+                                    .accept(resourceType);
+            });
             //encode the newly created SCIM Resource Type object.
-            String encodedObject;
-            Map<String, String> responseHeaders = new HashMap<String, String>();
+            ListedResource listedResource = new ListedResource();
+            listedResource.setTotalResults(ResourceTypeRegistration.getResouceTypeCount());
+            copiedResourceTypes.forEach(listedResource::addResource);
+            String encodedObject = getEncoder().encodeSCIMObject(listedResource);
+            Map<String, String> responseHeaders = new HashMap<>();
+            responseHeaders.put(SCIMConstants.LOCATION_HEADER,
+                getResourceEndpointURL(SCIMConstants.RESOURCE_TYPE_ENDPOINT));
+            responseHeaders.put(SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON);
 
-            if (resourceTypeObject != null) {
-                //create a deep copy of the resource type object since we are going to change it.
-                AbstractSCIMObject copiedObject = (AbstractSCIMObject) CopyUtil.deepCopy(resourceTypeObject);
-                encodedObject = encoder.encodeSCIMObject(copiedObject);
-                //add location header
-                responseHeaders
-                    .put(SCIMConstants.LOCATION_HEADER, getResourceEndpointURL(SCIMConstants.RESOURCE_TYPE_ENDPOINT));
-                responseHeaders.put(SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON);
-
-            } else {
-                String error = "Newly created User resource is null.";
-                throw new InternalErrorException(error);
-            }
             //put the uri of the resource type object in the response header parameter.
             return new SCIMResponse(ResponseCodeConstants.CODE_OK, encodedObject, responseHeaders);
-        } catch (CharonException e) {
+        } catch (AbstractCharonException e) {
             return encodeSCIMException(e);
-        } catch (BadRequestException e) {
-            return encodeSCIMException(e);
-        } catch (InternalErrorException e) {
-            return encodeSCIMException(e);
-        } catch (NotFoundException e) {
-            return encodeSCIMException(e);
-        } catch (JSONException e) {
-            return null;
+        } catch (RuntimeException e) {
+            log.error(e.getMessage(), e);
+            CharonException charonException = new CharonException("an unexpected error occured: " + e.getMessage());
+            return encodeSCIMException(charonException);
         }
     }
 
-    public SCIMResponse create(ResourceHandler userManager, String scimObjectString, String attributes,
+    @Override
+    public SCIMResponse create(String scimObjectString,
+                               UserManager userManager,
+                               String attributes,
                                String excludeAttributes) {
 
         String error = "Request is undefined";
@@ -171,7 +144,7 @@ public class ResourceTypeResourceManager extends ResourceManager {
         return encodeSCIMException(badRequestException);
     }
 
-    /*
+    /**
      * This combines the user and group resource type AbstractSCIMObjects and build a
      * one root AbstractSCIMObjects
      *

@@ -37,6 +37,7 @@ import org.wso2.charon3.core.schema.SCIMConstants;
 import org.wso2.charon3.core.schema.SCIMDefinitions;
 import org.wso2.charon3.core.schema.SCIMResourceSchemaManager;
 import org.wso2.charon3.core.utils.AttributeUtil;
+import org.wso2.charon3.core.utils.codeutils.SearchRequest;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -50,8 +51,8 @@ import java.util.Map;
 
 public class JSONEncoder {
 
-    private String format;
     private static final Logger logger = LoggerFactory.getLogger(JSONEncoder.class);
+    private String format;
 
     public JSONEncoder() {
         format = SCIMConstants.JSON;
@@ -103,6 +104,7 @@ public class JSONEncoder {
         }
         return rootErrorObject.toString();
     }
+
     /*
      * Make JSON object from given SCIM object.
      *
@@ -337,7 +339,7 @@ public class JSONEncoder {
 
         for (int i = 0; i < values.size(); i++) {
             JSONObject authenticationSchemeObject = new JSONObject();
-            Object [] value = values.get(i);
+            Object[] value = values.get(i);
             authenticationSchemeObject.put(
                     SCIMConstants.ServiceProviderConfigSchemaConstants.NAME, value[0]);
             authenticationSchemeObject.put(
@@ -414,7 +416,8 @@ public class JSONEncoder {
     }
 
     /**
-     *  Build the group resource type json representation.
+     * Build the group resource type json representation.
+     *
      * @return
      */
     public String buildGroupResourceTypeJsonBody() throws JSONException {
@@ -494,6 +497,48 @@ public class JSONEncoder {
 
         operationResponseList.add(operationObject);
 
+    }
+
+    /**
+     * this method will encode the given searchrequest into a valid JSON representation for client side usage.
+     *
+     * @param searchRequest the search request to encode
+     * @return the JSON representation
+     */
+    public String encodeSearchRequest(SearchRequest searchRequest) {
+        if (searchRequest == null) {
+            return null;
+        }
+
+        JSONObject searchJson = new JSONObject();
+        try {
+            JSONArray schemas = new JSONArray();
+            schemas.put(SCIMConstants.SEARCH_SCHEMA_URI);
+            searchJson.put(SCIMConstants.CommonSchemaConstants.SCHEMAS, schemas);
+            searchJson.put(SCIMConstants.OperationalConstants.START_INDEX, searchRequest.getStartIndex());
+            searchJson.put(SCIMConstants.OperationalConstants.COUNT, searchRequest.getCount());
+            searchJson.put(SCIMConstants.OperationalConstants.FILTER, searchRequest.getFilterString());
+            searchJson.put(SCIMConstants.OperationalConstants.DOMAIN, searchRequest.getDomainName());
+            searchJson.put(SCIMConstants.OperationalConstants.SORT_BY, searchRequest.getSortBy());
+            searchJson.put(SCIMConstants.OperationalConstants.SORT_ORDER, searchRequest.getSortOder());
+
+            if (searchRequest.getAttributes() != null && !searchRequest.getAttributes().isEmpty()) {
+                final JSONArray attributes = new JSONArray();
+                searchRequest.getAttributes().forEach(attributes::put);
+                searchJson.put(SCIMConstants.OperationalConstants.ATTRIBUTES, attributes);
+            }
+
+            if (searchRequest.getExcludedAttributes() != null && !searchRequest.getExcludedAttributes().isEmpty()) {
+                final JSONArray excludedAttributes = new JSONArray();
+                searchRequest.getExcludedAttributes().forEach(excludedAttributes::put);
+                searchJson.put(SCIMConstants.OperationalConstants.EXCLUDED_ATTRIBUTES, excludedAttributes);
+            }
+
+        } catch (JSONException e) {
+            throw new IllegalStateException(e.getMessage(), e);
+        }
+
+        return searchJson.toString();
     }
 }
 

@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.wso2.charon3.core.config.CharonConfiguration;
 import org.wso2.charon3.core.encoder.JSONDecoder;
 import org.wso2.charon3.core.encoder.JSONEncoder;
+import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.BadRequestException;
 import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.exceptions.InternalErrorException;
@@ -29,12 +30,15 @@ import org.wso2.charon3.core.extensions.ResourceHandler;
 import org.wso2.charon3.core.objects.AbstractSCIMObject;
 import org.wso2.charon3.core.protocol.ResponseCodeConstants;
 import org.wso2.charon3.core.protocol.SCIMResponse;
+import org.wso2.charon3.core.resourcetypes.ResourceType;
 import org.wso2.charon3.core.schema.SCIMConstants;
 import org.wso2.charon3.core.schema.SCIMResourceSchemaManager;
 import org.wso2.charon3.core.schema.SCIMResourceTypeSchema;
 import org.wso2.charon3.core.utils.CopyUtil;
+import org.wso2.charon3.core.utils.codeutils.Node;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,8 +50,8 @@ public class ServiceProviderConfigResourceManager extends ResourceManager {
 
     private static final Logger log = LoggerFactory.getLogger(ServiceProviderConfigResourceManager.class);
 
-    public ServiceProviderConfigResourceManager(ResourceHandler resourceHandler) {
-        super(resourceHandler);
+    public ServiceProviderConfigResourceManager() {
+        super(new ServiceProviderManager());
     }
 
 
@@ -73,13 +77,11 @@ public class ServiceProviderConfigResourceManager extends ResourceManager {
             SCIMResourceTypeSchema schema =
                 SCIMResourceSchemaManager.getInstance().getServiceProviderConfigResourceSchema();
             //create a string in json format with relevant values
-            String scimObjectString = encoder.buildServiceProviderConfigJsonBody(CharonConfiguration.getInstance()
-                                                                                                    .getConfig());
+            String scimObjectString = encoder.buildServiceProviderConfigJsonBody(
+                CharonConfiguration.getInstance().getConfig());
             //decode the SCIM service provider config object, encoded in the submitted payload.
             AbstractSCIMObject serviceProviderConfigObject = (AbstractSCIMObject) decoder.decodeResource(
-                scimObjectString,
-                schema,
-                new AbstractSCIMObject());
+                scimObjectString, schema, new AbstractSCIMObject());
 
             //encode the newly created SCIM service provider config object and add id attribute to Location header.
             String encodedObject;
@@ -91,7 +93,7 @@ public class ServiceProviderConfigResourceManager extends ResourceManager {
                 encodedObject = encoder.encodeSCIMObject(copiedObject);
                 //add location header
                 responseHeaders.put(SCIMConstants.LOCATION_HEADER,
-                                    getResourceEndpointURL(SCIMConstants.SERVICE_PROVIDER_CONFIG_ENDPOINT));
+                    getResourceEndpointURL(SCIMConstants.SERVICE_PROVIDER_CONFIG_ENDPOINT));
                 responseHeaders.put(SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON);
 
             } else {
@@ -167,5 +169,55 @@ public class ServiceProviderConfigResourceManager extends ResourceManager {
         String error = "Request is undefined";
         BadRequestException badRequestException = new BadRequestException(error, ResponseCodeConstants.INVALID_PATH);
         return encodeSCIMException(badRequestException);
+    }
+
+    /**
+     * useless resource handler implemantation to bypass the Objects.requireNonNull method call within
+     * {@link ResourceManager}
+     */
+    public static class ServiceProviderManager implements ResourceHandler<ResourceType> {
+
+        @Override
+        public ResourceType create(ResourceType resource, Map<String, Boolean> requiredAttributes)
+            throws AbstractCharonException {
+            return null;
+        }
+
+        @Override
+        public ResourceType get(String id, Map<String, Boolean> requiredAttributes) throws AbstractCharonException {
+            return null;
+        }
+
+        @Override
+        public void delete(String id) throws AbstractCharonException {
+
+        }
+
+        @Override
+        public List<Object> listResources(Node node,
+                                          Integer startIndex,
+                                          Integer count,
+                                          String sortBy,
+                                          String sortOrder,
+                                          String domainName,
+                                          Map<String, Boolean> requiredAttributes) throws AbstractCharonException {
+            return null;
+        }
+
+        @Override
+        public ResourceType update(ResourceType resourceUpdate, Map<String, Boolean> requiredAttributes)
+            throws AbstractCharonException {
+            return null;
+        }
+
+        @Override
+        public String getResourceEndpoint() {
+            return null;
+        }
+
+        @Override
+        public SCIMResourceTypeSchema getResourceSchema() {
+            return null;
+        }
     }
 }

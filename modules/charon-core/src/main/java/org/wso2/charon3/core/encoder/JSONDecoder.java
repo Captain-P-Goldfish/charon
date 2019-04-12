@@ -111,10 +111,11 @@ public class JSONDecoder {
             throw new BadRequestException(ResponseCodeConstants.INVALID_SYNTAX);
         }
 
-        int totalResults = getIntValueFromJson(decodedJsonObj,
+        Optional<Integer> totalResults = getIntValueFromJson(decodedJsonObj,
             SCIMConstants.ListedResourceSchemaConstants.TOTAL_RESULTS);
-        int startIndex = getIntValueFromJson(decodedJsonObj, SCIMConstants.ListedResourceSchemaConstants.START_INDEX);
-        int itemsPerPage = getIntValueFromJson(decodedJsonObj,
+        Optional<Integer> startIndex = getIntValueFromJson(decodedJsonObj,
+            SCIMConstants.ListedResourceSchemaConstants.START_INDEX);
+        Optional<Integer> itemsPerPage = getIntValueFromJson(decodedJsonObj,
             SCIMConstants.ListedResourceSchemaConstants.ITEMS_PER_PAGE);
 
         ListedResource listedResource = new ListedResource();

@@ -49,7 +49,7 @@ class ResourceTypeResourceManagerTest implements FileReferences {
     public void testGetResourcesFromResourceTypeEndpoint()
         throws BadRequestException, CharonException, NotFoundException {
         ResourceTypeResourceManager resourceManager = new ResourceTypeResourceManager();
-        SCIMResponse scimResponse = resourceManager.get(null, null, null, null);
+        SCIMResponse scimResponse = resourceManager.get(null, null, null);
         Assertions.assertEquals(ResponseCodeConstants.CODE_OK, scimResponse.getResponseStatus());
 
         ListedResource listedResource = JSON_DECODER.decodeListedResource(scimResponse.getResponseMessage(),
@@ -84,7 +84,7 @@ class ResourceTypeResourceManagerTest implements FileReferences {
         ResourceTypeRegistration.addResourceType(clientType);
 
         ResourceTypeResourceManager resourceManager = new ResourceTypeResourceManager();
-        SCIMResponse scimResponse = resourceManager.get(null, null, null, null);
+        SCIMResponse scimResponse = resourceManager.get(null, null, null);
         Assertions.assertEquals(ResponseCodeConstants.CODE_OK, scimResponse.getResponseStatus());
 
         ListedResource listedResource = JSON_DECODER.decodeListedResource(scimResponse.getResponseMessage(),

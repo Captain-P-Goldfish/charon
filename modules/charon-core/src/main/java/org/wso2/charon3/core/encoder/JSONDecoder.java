@@ -393,11 +393,11 @@ public class JSONDecoder {
             try {
                 resourceString = jsonObject.optString(extension.getSchema());
             } catch (JSONException e) {
-                logger.debug(e.getMessage());
-                return scimObject;
+                logger.debug(e.getMessage(), e);
+                continue;
             }
             if (StringUtils.isBlank(resourceString)) {
-                return scimObject;
+                continue;
             }
             AbstractSCIMObject scimExtension = decodeResource(resourceString, extension, new AbstractSCIMObject());
             final SCIMAttributeSchema scimAttributeSchema = extension.getAsAttributeSchema();

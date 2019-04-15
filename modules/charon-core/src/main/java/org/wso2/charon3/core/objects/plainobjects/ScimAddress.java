@@ -263,18 +263,4 @@ public class ScimAddress {
                  ", primary=" + primary +
                  '}';
     }
-
-    @Override
-    public String toString() {
-        return "ScimAddress{" +
-                 "formatted='" + formatted + '\'' +
-                 ", type='" + type + '\'' +
-                 ", streetAddress='" + streetAddress + '\'' +
-                 ", locality='" + locality + '\'' +
-                 ", region='" + region + '\'' +
-                 ", postalCode='" + postalCode + '\'' +
-                 ", country='" + country + '\'' +
-                 ", primary=" + primary +
-                 '}';
-    }
 }

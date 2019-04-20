@@ -38,7 +38,6 @@ import java.util.Map;
 
 import static org.wso2.charon3.core.schema.ServerSideValidator.validateResourceTypeSCIMObject;
 import static org.wso2.charon3.core.utils.LambdaExceptionUtils.rethrowConsumer;
-import static org.wso2.charon3.core.utils.LambdaExceptionUtils.rethrowSupplier;
 
 /**
  * The "RESOURCE_TYPES" schema specifies the metadata about a resource type. This is the spec compatible version of
@@ -67,10 +66,10 @@ public class ResourceTypeResourceManager extends ResourceManager<ResourceType> {
                 throw new NotFoundException("resource with id '" + id + "' does not exist");
             }
             rethrowConsumer(rt -> validateResourceTypeSCIMObject((AbstractSCIMObject) rt)).accept(resourceType);
-            String encodedObject = rethrowSupplier(() -> getEncoder().encodeSCIMObject(resourceType)).get();
+            String encodedObject = getEncoder().encodeSCIMObject(resourceType);
             Map<String, String> responseHeaders = new HashMap<>();
             responseHeaders.put(SCIMConstants.LOCATION_HEADER,
-                rethrowSupplier(() -> getResourceEndpointURL(SCIMConstants.RESOURCE_TYPE_ENDPOINT)).get());
+                getResourceEndpointURL(SCIMConstants.RESOURCE_TYPE_ENDPOINT));
             responseHeaders.put(SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON);
             return new SCIMResponse(ResponseCodeConstants.CODE_OK, encodedObject, responseHeaders);
         } catch (AbstractCharonException ex) {
@@ -82,7 +81,6 @@ public class ResourceTypeResourceManager extends ResourceManager<ResourceType> {
         }
     }
 
-    @Override
     public SCIMResponse create(String scimObjectString, String attributes, String excludeAttributes) {
 
         String error = "Request is undefined";
@@ -165,28 +163,25 @@ public class ResourceTypeResourceManager extends ResourceManager<ResourceType> {
     }
 
     /**
-     * empty useless implementation that is used to bypass the Objects.requireNonNull method in the constructor of
-     * {@link ResourceManager}
+     * this class is a simple useless mockup that is used to prevent a NullPointerException on the parent constructor
      */
-    private static class ResourceTypeHandler implements ResourceHandler<ResourceType> {
+    public static class ResourceTypeHandler implements ResourceHandler<ResourceType> {
 
-        @Override
+        private ResourceTypeHandler() {
+        }
+
         public ResourceType create(ResourceType resource, Map<String, Boolean> requiredAttributes)
             throws AbstractCharonException {
             return null;
         }
 
-        @Override
         public ResourceType get(String id, Map<String, Boolean> requiredAttributes) throws AbstractCharonException {
             return null;
         }
 
-        @Override
         public void delete(String id) throws AbstractCharonException {
-
         }
 
-        @Override
         public List<Object> listResources(Node node,
                                           Integer startIndex,
                                           Integer count,
@@ -197,18 +192,15 @@ public class ResourceTypeResourceManager extends ResourceManager<ResourceType> {
             return null;
         }
 
-        @Override
         public ResourceType update(ResourceType resourceUpdate, Map<String, Boolean> requiredAttributes)
             throws AbstractCharonException {
             return null;
         }
 
-        @Override
         public String getResourceEndpoint() {
             return null;
         }
 
-        @Override
         public SCIMResourceTypeSchema getResourceSchema() {
             return null;
         }

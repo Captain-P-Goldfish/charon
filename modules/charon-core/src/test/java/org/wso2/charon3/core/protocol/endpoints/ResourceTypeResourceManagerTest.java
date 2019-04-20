@@ -35,6 +35,11 @@ class ResourceTypeResourceManagerTest implements FileReferences {
         String baseUri = "https://localhost:8443/charon/scim/v2";
         Map<String, String> endpointMap = new HashMap<>();
         endpointMap.put(SCIMConstants.USER_ENDPOINT, baseUri + SCIMConstants.USER_ENDPOINT);
+        endpointMap.put(SCIMConstants.GROUP_ENDPOINT, baseUri + SCIMConstants.GROUP_ENDPOINT);
+        endpointMap.put(SCIMConstants.USER_SCHEMA_ENDPOINT, baseUri + SCIMConstants.USER_SCHEMA_ENDPOINT);
+        endpointMap.put(SCIMConstants.ENTERPRISE_USER_SCHEMA_ENDPOINT,
+            baseUri + SCIMConstants.ENTERPRISE_USER_SCHEMA_ENDPOINT);
+        endpointMap.put(SCIMConstants.GROUP_SCHEMA_ENDPOINT, baseUri + SCIMConstants.GROUP_SCHEMA_ENDPOINT);
         endpointMap.put(SCIMConstants.RESOURCE_TYPE_ENDPOINT, baseUri + SCIMConstants.RESOURCE_TYPE_ENDPOINT);
         endpointMap.put(ClientSchemaConstants.CLIENTS_ENDPOINT, baseUri + ClientSchemaConstants.CLIENTS_ENDPOINT);
         AbstractResourceManager.setEndpointURLMap(endpointMap);

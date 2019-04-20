@@ -81,11 +81,11 @@ public interface FileReferences {
     public static final String SEARCH_REQUEST_FILE = BASE_PATH + "search/search-request.json";
 
 
+
     /**
      * a resource file that represents a resource type for the user scim type
      */
     public static final String USER_RESOURCE_TYPE_FILE = BASE_PATH + "resourcetypes/user-resource-type.json";
-
 
     /**
      * reads a file from the test-resources

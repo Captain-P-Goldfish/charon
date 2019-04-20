@@ -18,7 +18,7 @@ package org.wso2.charon3.core.utils.codeutils;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 
 /**
@@ -49,8 +49,8 @@ public class SearchRequest {
     };
 
     private String schema;
-    private ArrayList<String> attributes = null;
-    private ArrayList<String> excludedAttributes = null;
+    private List<String> attributes = null;
+    private List<String> excludedAttributes = null;
     private int count;
     private int startIndex;
     private String countStr;
@@ -93,19 +93,23 @@ public class SearchRequest {
         this.count = count;
     }
 
-    public ArrayList<String> getAttributes() {
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public List<String> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(ArrayList<String> attributes) {
+    public void setAttributes(List<String> attributes) {
         this.attributes = attributes;
     }
 
-    public ArrayList<String> getExcludedAttributes() {
+    public List<String> getExcludedAttributes() {
         return excludedAttributes;
     }
 
-    public void setExcludedAttributes(ArrayList<String> excludedAttributes) {
+    public void setExcludedAttributes(List<String> excludedAttributes) {
         this.excludedAttributes = excludedAttributes;
     }
 

@@ -23,15 +23,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * <br><br>
  * created at: 08.04.2019
+ *
  * @author Pascal Knüppel
  */
 class ResourceTypeResourceManagerTest implements FileReferences {
 
     @BeforeEach
-    public void registerEndpoints() {
+    public void registerEndpoints () {
         String baseUri = "https://localhost:8443/charon/scim/v2";
         Map<String, String> endpointMap = new HashMap<>();
         endpointMap.put(SCIMConstants.USER_ENDPOINT, baseUri + SCIMConstants.USER_ENDPOINT);
@@ -46,13 +46,13 @@ class ResourceTypeResourceManagerTest implements FileReferences {
     }
 
     @AfterEach
-    public void removeAddedClientResourceType() {
+    public void removeAddedClientResourceType () {
         ResourceTypeRegistration.getResourceTypeList().removeIf(
             resourceType -> resourceType.getName().equals(ClientSchemaConstants.CLIENT_RESOURCE_TYPE));
     }
 
     @Test
-    public void testGetResourcesFromResourceTypeEndpoint()
+    public void testGetResourcesFromResourceTypeEndpoint ()
         throws BadRequestException, CharonException, NotFoundException {
         ResourceTypeResourceManager resourceManager = new ResourceTypeResourceManager();
         SCIMResponse scimResponse = resourceManager.listWithGET(null, null, null, null, null, null, null, null);
@@ -76,13 +76,13 @@ class ResourceTypeResourceManagerTest implements FileReferences {
         Assertions.assertEquals(resourceTypeEndpoint + "/" + SCIMConstants.GROUP, groupType.getLocation());
     }
 
-    private ResourceType getResourceType(String type, ListedResource listedResource) {
+    private ResourceType getResourceType (String type, ListedResource listedResource) {
         return listedResource.getResources().stream().map(rt -> (ResourceType) rt).filter(
             rt -> rt.getName().equals(type)).findAny().orElse(null);
     }
 
     @Test
-    public void testGetSingleResource() throws InternalErrorException, BadRequestException, CharonException {
+    public void testGetSingleResource () throws InternalErrorException, BadRequestException, CharonException {
         ResourceTypeResourceManager resourceManager = new ResourceTypeResourceManager();
         final String resourceId = SCIMConstants.USER;
         SCIMResponse scimResponse = resourceManager.get(resourceId, null, null);
@@ -93,7 +93,7 @@ class ResourceTypeResourceManagerTest implements FileReferences {
     }
 
     @Test
-    public void testGetNotExistentResource() throws BadRequestException, CharonException {
+    public void testGetNotExistentResource () throws BadRequestException, CharonException {
         ResourceTypeResourceManager resourceManager = new ResourceTypeResourceManager();
         final String resourceId = "Unknown";
         SCIMResponse scimResponse = resourceManager.get(resourceId, null, null);
@@ -104,7 +104,7 @@ class ResourceTypeResourceManagerTest implements FileReferences {
     }
 
     @Test
-    public void addANewResourceType() throws BadRequestException, CharonException, NotFoundException {
+    public void addANewResourceType () throws BadRequestException, CharonException, NotFoundException {
         ResourceType clientType = new ResourceType(ClientSchemaConstants.CLIENT_RESOURCE_TYPE,
             ClientSchemaConstants.CLIENT_RESOURCE_TYPE, "OpenID Connect Clients",
             ClientSchemaConstants.CLIENTS_ENDPOINT, ClientSchemaDefinition.SCIM_CLIENT_SCHEMA);

@@ -19,7 +19,12 @@
 package org.wso2.charon3.core.objects;
 
 import org.apache.commons.lang3.StringUtils;
-import org.wso2.charon3.core.attributes.*;
+import org.wso2.charon3.core.attributes.AbstractAttribute;
+import org.wso2.charon3.core.attributes.Attribute;
+import org.wso2.charon3.core.attributes.ComplexAttribute;
+import org.wso2.charon3.core.attributes.DefaultAttributeFactory;
+import org.wso2.charon3.core.attributes.MultiValuedAttribute;
+import org.wso2.charon3.core.attributes.SimpleAttribute;
 import org.wso2.charon3.core.exceptions.InternalErrorException;
 import org.wso2.charon3.core.objects.plainobjects.Meta;
 import org.wso2.charon3.core.objects.plainobjects.MultiValuedComplexType;
@@ -31,7 +36,12 @@ import org.wso2.charon3.core.schema.SCIMSchemaDefinitions;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.TimeZone;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 

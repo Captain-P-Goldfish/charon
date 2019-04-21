@@ -143,7 +143,6 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
             if (createdResource != null) {
                 // need to remove attributes that should never be returned
                 ServerSideValidator.validateReturnedAttributes(createdResource, attributes, excludeAttributes);
-
                 encodedResource = getEncoder().encodeSCIMObject(createdResource);
                 // add location header
                 httpHeaders.put(SCIMConstants.LOCATION_HEADER,

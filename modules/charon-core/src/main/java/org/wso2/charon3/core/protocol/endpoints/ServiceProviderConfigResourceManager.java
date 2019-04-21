@@ -18,64 +18,41 @@ package org.wso2.charon3.core.protocol.endpoints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.charon3.core.config.CharonConfiguration;
-import org.wso2.charon3.core.encoder.JSONEncoder;
 import org.wso2.charon3.core.exceptions.AbstractCharonException;
-import org.wso2.charon3.core.exceptions.BadRequestException;
 import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.exceptions.InternalErrorException;
-import org.wso2.charon3.core.extensions.ResourceHandler;
 import org.wso2.charon3.core.objects.AbstractSCIMObject;
 import org.wso2.charon3.core.protocol.ResponseCodeConstants;
 import org.wso2.charon3.core.protocol.SCIMResponse;
-import org.wso2.charon3.core.resourcetypes.ResourceType;
 import org.wso2.charon3.core.schema.SCIMConstants;
-import org.wso2.charon3.core.schema.SCIMResourceTypeSchema;
 import org.wso2.charon3.core.utils.CopyUtil;
-import org.wso2.charon3.core.utils.codeutils.Node;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
- * The service provider configuration resource enables a service
- * provider to discover SCIM specification features in a standardized
- * form as well as provide additional implementation details to clients.
+ * The service provider configuration resource enables a service provider to discover SCIM specification features in a
+ * standardized form as well as provide additional implementation details to clients.
  */
-public class ServiceProviderConfigResourceManager extends ResourceManager {
+public class ServiceProviderConfigResourceManager extends AbstractResourceManager {
 
     private static final Logger log = LoggerFactory.getLogger(ServiceProviderConfigResourceManager.class);
 
-    public ServiceProviderConfigResourceManager() {
-        super(new ServiceProviderManager());
-    }
-
-
-    /*
-     * Retrieves a service provider config
-     *
-     * @return SCIM response to be returned.
+    /**
+     * @return the service provider configuration
      */
-    @Override
-    public SCIMResponse get(String id, String attributes, String excludeAttributes) {
-        return getServiceProviderConfig();
-    }
-
-    private SCIMResponse getServiceProviderConfig() {
-        JSONEncoder encoder = null;
+    public SCIMResponse getServiceProviderConfig () {
         try {
-            //obtain the json encoder
-            encoder = getEncoder();
 
             //encode the newly created SCIM service provider config object and add id attribute to Location header.
             String encodedObject;
-            Map<String, String> responseHeaders = new HashMap<String, String>();
+            Map<String, String> responseHeaders = new HashMap<>();
 
             if (CharonConfiguration.getInstance() != null) {
                 //create a deep copy of the service provider config object since we are going to change it.
                 AbstractSCIMObject copiedObject = (AbstractSCIMObject) CopyUtil.deepCopy(
                     CharonConfiguration.getInstance());
-                encodedObject = encoder.encodeSCIMObject(copiedObject);
+                encodedObject = getEncoder().encodeSCIMObject(copiedObject);
                 //add location header
                 responseHeaders.put(SCIMConstants.LOCATION_HEADER,
                     getResourceEndpointURL(SCIMConstants.SERVICE_PROVIDER_CONFIG_ENDPOINT));
@@ -93,112 +70,6 @@ public class ServiceProviderConfigResourceManager extends ResourceManager {
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             return encodeSCIMException(new CharonException(e.getMessage()));
-        }
-    }
-
-    @Override
-    public SCIMResponse create(String scimObjectString, String attributes, String excludeAttributes) {
-        String error = "Request is undefined";
-        BadRequestException badRequestException = new BadRequestException(error, ResponseCodeConstants.INVALID_PATH);
-        return encodeSCIMException(badRequestException);
-    }
-
-    @Override
-    public SCIMResponse delete(String id) {
-        String error = "Request is undefined";
-        BadRequestException badRequestException = new BadRequestException(error, ResponseCodeConstants.INVALID_PATH);
-        return encodeSCIMException(badRequestException);
-    }
-
-    @Override
-    public SCIMResponse listWithGET(String filter,
-                                    Integer startIndex,
-                                    Integer count,
-                                    String sortBy,
-                                    String sortOrder,
-                                    String domainName,
-                                    String attributes,
-                                    String excludeAttributes) {
-        String error = "Request is undefined";
-        BadRequestException badRequestException = new BadRequestException(error, ResponseCodeConstants.INVALID_PATH);
-        return encodeSCIMException(badRequestException);
-    }
-
-    @Override
-    public SCIMResponse listWithPOST(String resourceString) {
-        String error = "Request is undefined";
-        BadRequestException badRequestException = new BadRequestException(error, ResponseCodeConstants.INVALID_PATH);
-        return encodeSCIMException(badRequestException);
-    }
-
-
-    @Override
-    public SCIMResponse updateWithPUT(String existingId,
-                                      String scimObjectString,
-                                      String attributes,
-                                      String excludeAttributes) {
-        String error = "Request is undefined";
-        BadRequestException badRequestException = new BadRequestException(error, ResponseCodeConstants.INVALID_PATH);
-        return encodeSCIMException(badRequestException);
-    }
-
-    @Override
-    public SCIMResponse updateWithPATCH(String existingId,
-                                        String scimObjectString,
-                                        String attributes,
-                                        String excludeAttributes) {
-        String error = "Request is undefined";
-        BadRequestException badRequestException = new BadRequestException(error, ResponseCodeConstants.INVALID_PATH);
-        return encodeSCIMException(badRequestException);
-    }
-
-    /**
-     * useless resource handler implemantation to bypass the Objects.requireNonNull method call within
-     * {@link ResourceManager}
-     */
-    public static class ServiceProviderManager implements ResourceHandler<ResourceType> {
-
-        @Override
-        public ResourceType create(ResourceType resource, Map<String, Boolean> requiredAttributes)
-            throws AbstractCharonException {
-            return null;
-        }
-
-        @Override
-        public ResourceType get(String id, Map<String, Boolean> requiredAttributes) throws AbstractCharonException {
-            return null;
-        }
-
-        @Override
-        public void delete(String id) throws AbstractCharonException {
-
-        }
-
-        @Override
-        public List<Object> listResources(Node node,
-                                          Integer startIndex,
-                                          Integer count,
-                                          String sortBy,
-                                          String sortOrder,
-                                          String domainName,
-                                          Map<String, Boolean> requiredAttributes) throws AbstractCharonException {
-            return null;
-        }
-
-        @Override
-        public ResourceType update(ResourceType resourceUpdate, Map<String, Boolean> requiredAttributes)
-            throws AbstractCharonException {
-            return null;
-        }
-
-        @Override
-        public String getResourceEndpoint() {
-            return null;
-        }
-
-        @Override
-        public SCIMResourceTypeSchema getResourceSchema() {
-            return null;
         }
     }
 }

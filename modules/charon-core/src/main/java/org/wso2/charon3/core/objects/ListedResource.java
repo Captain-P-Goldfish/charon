@@ -21,7 +21,6 @@ import org.wso2.charon3.core.attributes.ComplexAttribute;
 import org.wso2.charon3.core.attributes.DefaultAttributeFactory;
 import org.wso2.charon3.core.attributes.MultiValuedAttribute;
 import org.wso2.charon3.core.attributes.SimpleAttribute;
-import org.wso2.charon3.core.schema.AttributeSchema;
 import org.wso2.charon3.core.schema.SCIMConstants;
 import org.wso2.charon3.core.schema.SCIMSchemaDefinitions;
 
@@ -46,12 +45,12 @@ public class ListedResource extends AbstractSCIMObject {
      */
     private List<SCIMObject> resources = new ArrayList<>();
 
-    public int getTotalResults() {
+    public int getTotalResults () {
         if (!isAttributeExist(SCIMConstants.ListedResourceSchemaConstants.TOTAL_RESULTS)) {
             return 0;
         } else {
             String totalResultsString = SCIMConstants.ListedResourceSchemaConstants.TOTAL_RESULTS;
-            SimpleAttribute totalResultsAttribute = ((SimpleAttribute) attributeList.get(totalResultsString));
+            SimpleAttribute totalResultsAttribute = ( (SimpleAttribute) attributeList.get(totalResultsString) );
             return (Integer) totalResultsAttribute.getValue();
         }
     }
@@ -61,7 +60,7 @@ public class ListedResource extends AbstractSCIMObject {
      *
      * @param totalResults
      */
-    public void setTotalResults(int totalResults) {
+    public void setTotalResults (int totalResults) {
         if (!isAttributeExist(SCIMConstants.ListedResourceSchemaConstants.TOTAL_RESULTS)) {
             SimpleAttribute totalResultsAttribute = rethrowSupplier(() -> {
                 return (SimpleAttribute) DefaultAttributeFactory.createAttribute(
@@ -74,7 +73,7 @@ public class ListedResource extends AbstractSCIMObject {
             //TODO: may be we can let the default attribute factory to handle it?
             attributeList.put(SCIMConstants.ListedResourceSchemaConstants.TOTAL_RESULTS, totalResultsAttribute);
         } else {
-            ((SimpleAttribute) attributeList.get(SCIMConstants.ListedResourceSchemaConstants.TOTAL_RESULTS)).setValue(
+            ( (SimpleAttribute) attributeList.get(SCIMConstants.ListedResourceSchemaConstants.TOTAL_RESULTS) ).setValue(
                 totalResults);
         }
     }
@@ -82,12 +81,12 @@ public class ListedResource extends AbstractSCIMObject {
     /**
      * @return the items per page value of this listed resource
      */
-    public int getItemsPerPage() {
+    public int getItemsPerPage () {
         if (!isAttributeExist(SCIMConstants.ListedResourceSchemaConstants.ITEMS_PER_PAGE)) {
             return 0;
         } else {
             String itemsPerPageString = SCIMConstants.ListedResourceSchemaConstants.ITEMS_PER_PAGE;
-            SimpleAttribute itemsPerPageAttribute = ((SimpleAttribute) attributeList.get(itemsPerPageString));
+            SimpleAttribute itemsPerPageAttribute = ( (SimpleAttribute) attributeList.get(itemsPerPageString) );
             return (Integer) itemsPerPageAttribute.getValue();
         }
     }
@@ -97,7 +96,7 @@ public class ListedResource extends AbstractSCIMObject {
      *
      * @param itemsPerPage
      */
-    public void setItemsPerPage(int itemsPerPage) {
+    public void setItemsPerPage (int itemsPerPage) {
         if (!isAttributeExist(SCIMConstants.ListedResourceSchemaConstants.ITEMS_PER_PAGE)) {
             SimpleAttribute totalResultsAttribute = rethrowSupplier(() -> {
                 return (SimpleAttribute) DefaultAttributeFactory.createAttribute(
@@ -106,20 +105,21 @@ public class ListedResource extends AbstractSCIMObject {
             }).get();
             attributeList.put(SCIMConstants.ListedResourceSchemaConstants.ITEMS_PER_PAGE, totalResultsAttribute);
         } else {
-            ((SimpleAttribute) attributeList.get(SCIMConstants.ListedResourceSchemaConstants.ITEMS_PER_PAGE)).setValue(
-                itemsPerPage);
+            ( (SimpleAttribute) attributeList.get(SCIMConstants.ListedResourceSchemaConstants.ITEMS_PER_PAGE) )
+                .setValue(
+                    itemsPerPage);
         }
     }
 
     /**
      * @return the start index value of this listed resource
      */
-    public int getStartIndex() {
+    public int getStartIndex () {
         if (!isAttributeExist(SCIMConstants.ListedResourceSchemaConstants.START_INDEX)) {
             return 0;
         } else {
             String startIndexString = SCIMConstants.ListedResourceSchemaConstants.START_INDEX;
-            SimpleAttribute startIndexAttribute = ((SimpleAttribute) attributeList.get(startIndexString));
+            SimpleAttribute startIndexAttribute = ( (SimpleAttribute) attributeList.get(startIndexString) );
             return (Integer) startIndexAttribute.getValue();
         }
     }
@@ -129,7 +129,7 @@ public class ListedResource extends AbstractSCIMObject {
      *
      * @param startIndex
      */
-    public void setStartIndex(int startIndex) {
+    public void setStartIndex (int startIndex) {
         if (!isAttributeExist(SCIMConstants.ListedResourceSchemaConstants.START_INDEX)) {
             SimpleAttribute totalResultsAttribute = rethrowSupplier(() -> {
                 return (SimpleAttribute) DefaultAttributeFactory.createAttribute(
@@ -138,7 +138,7 @@ public class ListedResource extends AbstractSCIMObject {
             }).get();
             attributeList.put(SCIMConstants.ListedResourceSchemaConstants.START_INDEX, totalResultsAttribute);
         } else {
-            ((SimpleAttribute) attributeList.get(SCIMConstants.ListedResourceSchemaConstants.START_INDEX)).setValue(
+            ( (SimpleAttribute) attributeList.get(SCIMConstants.ListedResourceSchemaConstants.START_INDEX) ).setValue(
                 startIndex);
         }
     }
@@ -149,7 +149,7 @@ public class ListedResource extends AbstractSCIMObject {
      * @param valueWithAttributes
      */
     @Deprecated
-    public void setResources(Map<String, Attribute> valueWithAttributes) {
+    public void setResources (Map<String, Attribute> valueWithAttributes) {
         // set given valueWithAttributes as resource in attributeList
         if (!isAttributeExist(SCIMConstants.ListedResourceSchemaConstants.RESOURCES)) {
             MultiValuedAttribute resourcesAttribute = new MultiValuedAttribute(
@@ -157,7 +157,7 @@ public class ListedResource extends AbstractSCIMObject {
             resourcesAttribute.setComplexValueWithSetOfSubAttributes(valueWithAttributes);
             attributeList.put(SCIMConstants.ListedResourceSchemaConstants.RESOURCES, resourcesAttribute);
         } else {
-            ((MultiValuedAttribute) attributeList.get(SCIMConstants.ListedResourceSchemaConstants.RESOURCES))
+            ( (MultiValuedAttribute) attributeList.get(SCIMConstants.ListedResourceSchemaConstants.RESOURCES) )
                 .setComplexValueWithSetOfSubAttributes(valueWithAttributes);
         }
         // set given valueWithAttributes as resource in list resource
@@ -169,15 +169,17 @@ public class ListedResource extends AbstractSCIMObject {
     /**
      * @see #resources
      */
-    public List<SCIMObject> getResources() {
+    public List<SCIMObject> getResources () {
         return resources;
     }
 
     /**
      * adds a new resource
-     * @param scimResourceType the new resource
+     *
+     * @param scimResourceType
+     *     the new resource
      */
-    public void addResource(SCIMObject scimResourceType) {
+    public void addResource (SCIMObject scimResourceType) {
         MultiValuedAttribute resourcesAttribute =
             getOrCrateMultivaluedAttribute(SCIMSchemaDefinitions.ListedResourceSchemaDefinition.RESOURCES);
 
@@ -188,7 +190,7 @@ public class ListedResource extends AbstractSCIMObject {
         rethrowConsumer(o -> DefaultAttributeFactory.createAttribute(SCIMSchemaDefinitions.SCHEMAS,
             (AbstractAttribute) o)).accept(schemas);
         schemas.setAttributePrimitiveValues(scimResourceType.getSchemaList().stream()
-            .map(s -> (Object)s).collect(Collectors.toList()));
+            .map(s -> (Object) s).collect(Collectors.toList()));
         resource.setSubAttribute(schemas);
         resourcesAttribute.setAttributeValue(resource);
 

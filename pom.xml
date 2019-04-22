@@ -49,7 +49,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.json</groupId>
+                <groupId>org.json.wso2</groupId>
                 <artifactId>json</artifactId>
                 <version>${json.version}</version>
             </dependency>
@@ -360,7 +360,7 @@
         <charon.parent.package.export.version>${charon.parent.version}</charon.parent.package.export.version>
         <commons-logging.osgi.version.range>[1.2,2.0)</commons-logging.osgi.version.range>
         <axiom.osgi.version.range>[1.2.11, 2.0.0)</axiom.osgi.version.range>
-        <json.version>20180813</json.version>
+        <json.version>3.0.0.wso2v1</json.version>
         <commons.logging.version>1.2</commons.logging.version>
         <axiom.api.version>1.2.22</axiom.api.version>
         <axiom.impl.version>1.2.11</axiom.impl.version>
@@ -370,7 +370,7 @@
         <mockito.version>2.25.1</mockito.version>
         <hamcrest.version>2.0.0.0</hamcrest.version>
         <log4j2.version>2.11.2</log4j2.version>
-        <servlet.api.version>2.3</servlet.api.version>
+        <servlet.api.version>2.5</servlet.api.version>
         <jsr311.api.version>1.1.1</jsr311.api.version>
         <project.scm.id>my-scm-server</project.scm.id>
 

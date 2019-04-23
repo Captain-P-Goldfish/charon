@@ -17,13 +17,14 @@
   ~  under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-<!--    <parent>-->
-<!--        <groupId>org.wso2</groupId>-->
-<!--        <artifactId>wso2</artifactId>-->
-<!--        <version>5</version>-->
-<!--    </parent>-->
+    <!--    <parent>-->
+    <!--        <groupId>org.wso2</groupId>-->
+    <!--        <artifactId>wso2</artifactId>-->
+    <!--        <version>5</version>-->
+    <!--    </parent>-->
     <groupId>org.wso2.charon</groupId>
     <artifactId>charon-parent</artifactId>
     <packaging>pom</packaging>
@@ -41,9 +42,9 @@
 
     <modules>
         <module>modules/charon-core</module>
-<!--        <module>modules/charon-utils</module>-->
-<!--        <module>modules/charon-impl</module>-->
-<!--        <module>modules/charon-samples</module>-->
+        <!--        <module>modules/charon-utils</module>-->
+        <!--        <module>modules/charon-impl</module>-->
+        <!--        <module>modules/charon-samples</module>-->
     </modules>
 
     <dependencyManagement>
@@ -200,11 +201,11 @@
     </dependencies>
 
     <distributionManagement>
-<!--        <repository>-->
-<!--            <id>nexus-releases</id>-->
-<!--            <name>WSO2 Nexus Release Repository</name>-->
-<!--            <url>http://maven.wso2.org/nexus/service/local/staging/deploy/maven2/</url>-->
-<!--        </repository>-->
+        <repository>
+            <id>nexus-releases</id>
+            <name>WSO2 Nexus Release Repository</name>
+            <url>http://maven.wso2.org/nexus/service/local/staging/deploy/maven2/</url>
+        </repository>
 <!--
         <snapshotRepository>
             <id>wso2.snapshots</id>
@@ -212,17 +213,6 @@
             <url>http://maven.wso2.org/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
 -->
-        <snapshotRepository>
-            <id>gov-extern-Snapshots</id>
-            <name>DVDV2</name>
-            <url>https://nexus-ext.governikus.de/nexus/content/repositories/snapshots/</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-        <repository>
-            <id>gov-extern-DVDV2</id>
-            <name>DVDV2</name>
-            <url>https://nexus-ext.governikus.de/nexus/content/repositories/DVDV2/</url>
-        </repository>
     </distributionManagement>
 
     <repositories>

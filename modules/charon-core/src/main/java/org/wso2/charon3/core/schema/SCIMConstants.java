@@ -32,6 +32,7 @@ public class SCIMConstants {
         "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig";
     public static final String RESOURCE_TYPE_SCHEMA_URI = CORE_SCHEMA_URI + ":ResourceType";
     public static final String SEARCH_SCHEMA_URI = MESSAGE_SCHEMA_URI + ":SearchRequest";
+    public static final String BULK_REQUEST_URI = "urn:ietf:params:scim:api:messages:2.0:BulkRequest";
     public static final String BULK_RESPONSE_URI = MESSAGE_SCHEMA_URI + ":BulkResponse";
     public static final String SCHEMA_URI = CORE_SCHEMA_URI + ":Schema";
 

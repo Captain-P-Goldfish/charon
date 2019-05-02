@@ -52,7 +52,12 @@ public class BulkResourceManager {
     private JSONDecoder decoder = new JSONDecoder();
 
     /**
-     * a list of the resource managers that can be used to process bulk operations
+     * the number of errors that actually occurred.
+     */
+    private int errorCount;
+
+    /**
+     * a list of the resource managers that can be used to process bulk operations.
      */
     private Map<String, ResourceManager> resourceManagerMap;
 
@@ -115,7 +120,7 @@ public class BulkResourceManager {
     }
 
     /**
-     * checks that the maximum payload is not exceeded
+     * checks that the maximum payload is not exceeded.
      *
      * @param requestBody the request body sent by the client
      */
@@ -132,7 +137,7 @@ public class BulkResourceManager {
     }
 
     /**
-     * checks that the maximum number of operations are not exceeded
+     * checks that the maximum number of operations are not exceeded.
      *
      * @param bulkRequestData the decoded bulk request
      */
@@ -224,7 +229,7 @@ public class BulkResourceManager {
     }
 
     /**
-     * tries to get the resource manager that is capable of processing the given request operation
+     * tries to get the resource manager that is capable of processing the given request operation.
      *
      * @param bulkRequestContent
      *     the request operation that should be processed

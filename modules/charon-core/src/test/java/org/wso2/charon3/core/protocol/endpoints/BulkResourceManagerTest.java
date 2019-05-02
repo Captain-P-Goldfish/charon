@@ -33,6 +33,7 @@ import java.util.UUID;
 import java.util.function.Function;
 
 /**
+ * .
  * <br><br>
  * created at: 03.04.2019
  *
@@ -43,7 +44,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
     private static final Logger log = LoggerFactory.getLogger(BulkResourceManagerTest.class);
 
     /**
-     * the class that is going to be tested by handling bulk requests
+     * the class that is going to be tested by handling bulk requests.
      */
     private BulkResourceManager bulkResourceManager;
 
@@ -62,7 +63,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
     }
 
     /**
-     * this method will show that the bulk request is handled correctly if a single bulk operation is executed
+     * this method will show that the bulk request is handled correctly if a single bulk operation is executed.
      */
     @Test
     public void handleBulkRequestWithOneOperation() throws AbstractCharonException {
@@ -92,7 +93,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
     }
 
     /**
-     * this method will show that the bulk request is handled correctly if a single bulk operation is executed
+     * this method will show that the bulk request is handled correctly if a single bulk operation is executed.
      */
     @Test
     public void handleBulkRequestWithTwoOperation() throws AbstractCharonException {
@@ -123,7 +124,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
     }
 
     /**
-     * shows that the put-method is correctly called by a bulk operation
+     * shows that the put-method is correctly called by a bulk operation.
      */
     @Test
     public void handlePutBulkRequest() throws AbstractCharonException {
@@ -160,7 +161,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
     }
 
     /**
-     * shows that the put-method is correctly called by a bulk operation
+     * shows that the put-method is correctly called by a bulk operation.
      */
     @Test
     public void handleDeleteBulkRequest() throws AbstractCharonException {
@@ -266,7 +267,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
     }
 
     /**
-     * shows that an exception is thrown if the payload send by the user is too large
+     * shows that an exception is thrown if the payload send by the user is too large.
      */
     @Test
     public void testPayloadTooLarge() {
@@ -280,7 +281,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
     }
 
     /**
-     * shows that an exception is thrown if the payload send by the user is too large
+     * shows that an exception is thrown if the payload send by the user is too large.
      */
     @Test
     public void testTooManyOperations() {

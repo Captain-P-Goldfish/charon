@@ -41,7 +41,7 @@ public class ListedResource extends AbstractSCIMObject {
     private static final long serialVersionUID = 6106269076155338045L;
 
     /**
-     * scim resources that are represented by this listed resource
+     * scim resources that are represented by this listed resource.
      */
     private List<SCIMObject> resources = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public class ListedResource extends AbstractSCIMObject {
     }
 
     /**
-     * set the total results of the listed resource
+     * set the total results of the listed resource.
      *
      * @param totalResults
      */
@@ -92,7 +92,7 @@ public class ListedResource extends AbstractSCIMObject {
     }
 
     /**
-     * paginated listed resource items per page settings
+     * paginated listed resource items per page settings.
      *
      * @param itemsPerPage
      */
@@ -125,7 +125,7 @@ public class ListedResource extends AbstractSCIMObject {
     }
 
     /**
-     * paginated listed resource start index settings
+     * paginated listed resource start index settings.
      *
      * @param startIndex
      */
@@ -144,7 +144,7 @@ public class ListedResource extends AbstractSCIMObject {
     }
 
     /**
-     * set the listed resources
+     * set the listed resources.
      *
      * @param valueWithAttributes
      */
@@ -174,7 +174,7 @@ public class ListedResource extends AbstractSCIMObject {
     }
 
     /**
-     * adds a new resource
+     * adds a new resource.
      *
      * @param scimResourceType
      *     the new resource

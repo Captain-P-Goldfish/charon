@@ -53,7 +53,7 @@ public class ResourceTypeResourceManager extends ResourceManager<ResourceType> {
     }
 
     /**
-     * Retrieves a single resource type with the specified id
+     * Retrieves a single resource type with the specified id.
      *
      * @return SCIM response to be returned.
      */
@@ -81,6 +81,7 @@ public class ResourceTypeResourceManager extends ResourceManager<ResourceType> {
         }
     }
 
+    @Override
     public SCIMResponse create(String scimObjectString, String attributes, String excludeAttributes) {
 
         String error = "Request is undefined";
@@ -163,7 +164,7 @@ public class ResourceTypeResourceManager extends ResourceManager<ResourceType> {
     }
 
     /**
-     * this class is a simple useless mockup that is used to prevent a NullPointerException on the parent constructor
+     * this class is a simple useless mockup that is used to prevent a NullPointerException on the parent constructor.
      */
     public static class ResourceTypeHandler implements ResourceHandler<ResourceType> {
 

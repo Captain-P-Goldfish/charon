@@ -1,10 +1,17 @@
 /*
- * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved. Licensed under the Apache License,
- * Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may
- * obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable
- * law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific
- * language governing permissions and limitations under the License.
+ * Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.wso2.charon3.core.protocol.endpoints;
 
@@ -55,19 +62,19 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
     private static final String INTERNAL_ERROR_MESSAGE = "an internal error occurred";
 
     /**
-     * the handler that will handle the scim resources
+     * the handler that will handle the scim resources.
      */
     private ResourceHandler<R> resourceHandler;
 
     /**
-     * holds the generic type of this implementation
+     * holds the generic type of this implementation.
      */
     private Class<R> genericType;
 
-    public ResourceManager (ResourceHandler<R> resourceHandler) {
+    public ResourceManager(ResourceHandler<R> resourceHandler) {
         this.resourceHandler = Objects.requireNonNull(resourceHandler, "resource handler must not be null!");
         this.genericType =
-            (Class<R>) ( (ParameterizedType) getClass().getGenericSuperclass() ).getActualTypeArguments()[0];
+            (Class<R>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     /**
@@ -76,7 +83,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      * @param id
      *     - unique resource id
      */
-    public SCIMResponse get (String id, String attributes, String excludeAttributes) {
+    public SCIMResponse get(String id, String attributes, String excludeAttributes) {
         JSONEncoder encoder = null;
         try {
             // obtain the correct encoder according to the format requested.
@@ -123,7 +130,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      * full representation can be useful to the client, enabling it to correlate the client and server views of the new
      * Resource. When a Resource is created, its uri must be returned in the response Location header.}
      */
-    public SCIMResponse create (String scimObjectString, String attributes, String excludeAttributes) {
+    public SCIMResponse create(String scimObjectString, String attributes, String excludeAttributes) {
         try {
             // returns core-resource schema
             SCIMResourceTypeSchema schema = resourceHandler.getResourceSchema();
@@ -171,7 +178,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      * @param id
      *     unique resource id
      */
-    public SCIMResponse delete (String id) {
+    public SCIMResponse delete(String id) {
         try {
             /* handover the SCIM resource object to the resource resourcemanager provided by the SP for the delete
             operation */
@@ -187,13 +194,13 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
     }
 
     /**
-     * get resources
+     * gets the specified resources.
      *
      * @param filter
      *     the filter expression
-     * @param startIndex
+     * @param startIndexInt
      *     index of the first entry
-     * @param count
+     * @param countInt
      *     number of resources to return in the request
      * @param sortBy
      *     a string indicating the attribute whose value SHALL be used to order the returned responses
@@ -208,14 +215,14 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      *     A multi-valued list of strings indicating the names of resource attributes to be removed from the default set
      *     of attributes to return
      */
-    public SCIMResponse listWithGET (String filter,
-                                     Integer startIndex,
-                                     Integer count,
-                                     String sortBy,
-                                     String sortOrder,
-                                     String domainName,
-                                     String attributes,
-                                     String excludeAttributes) {
+    public SCIMResponse listWithGET(String filter,
+                                    Integer startIndexInt,
+                                    Integer countInt,
+                                    String sortBy,
+                                    String sortOrder,
+                                    String domainName,
+                                    String attributes,
+                                    String excludeAttributes) {
         try {
             Node rootNode = null;
             if (filter != null) {
@@ -224,7 +231,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
                 rootNode = filterTreeManager.buildTree();
             }
 
-            return listResources(startIndex, count, sortBy, sortOrder, domainName, attributes, excludeAttributes,
+            return listResources(startIndexInt, countInt, sortBy, sortOrder, domainName, attributes, excludeAttributes,
                 rootNode);
 
         } catch (IOException e) {
@@ -239,24 +246,24 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
 
     /**
      * does the actual work for the methods {@link #listWithGET(String, Integer, Integer, String, String, String,
-     * String, String)} and {@link #listWithGET(String, Integer, Integer, String, String, String, String, String)}
+     * String, String)}  and {@link #listWithPOST(String)}.
      */
-    private SCIMResponse listResources (Integer startIndex,
-                                        Integer count,
-                                        String sortBy,
-                                        String sortOrder,
-                                        String domainName,
-                                        String attributes,
-                                        String excludeAttributes,
-                                        Node rootNode) {
+    private SCIMResponse listResources(Integer startIndex,
+                                       Integer count,
+                                       String sortBy,
+                                       String sortOrder,
+                                       String domainName,
+                                       String attributes,
+                                       String excludeAttributes,
+                                       Node rootNode) {
         try {
             // According to SCIM 2.0 spec minus values will be considered as 0
             count = ResourceManagerUtil.processCount(count == null ? null : String.valueOf(count));
             // According to SCIM 2.0 spec minus values will be considered as 1
             startIndex = ResourceManagerUtil.processStartIndex(startIndex == null ? null : String.valueOf(startIndex));
             if (sortOrder != null) {
-                if (!( sortOrder.equalsIgnoreCase(SCIMConstants.OperationalConstants.ASCENDING) ||
-                    sortOrder.equalsIgnoreCase(SCIMConstants.OperationalConstants.DESCENDING) )) {
+                if (!(sortOrder.equalsIgnoreCase(SCIMConstants.OperationalConstants.ASCENDING) ||
+                    sortOrder.equalsIgnoreCase(SCIMConstants.OperationalConstants.DESCENDING))) {
                     String error = " Invalid sortOrder value is specified";
                     throw new BadRequestException(error, ResponseCodeConstants.INVALID_VALUE);
                 }
@@ -320,12 +327,12 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
     }
 
     /**
-     * query resources
+     * query resources.
      *
      * @param resourceString
      *     the request body
      */
-    public SCIMResponse listWithPOST (String resourceString) {
+    public SCIMResponse listWithPOST(String resourceString) {
         try {
             // create the search request object
             SearchRequest searchRequest = getDecoder().decodeSearchRequestBody(resourceString,
@@ -351,7 +358,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
     }
 
     /**
-     * To update the resource by giving entire attribute set
+     * To update the resource by giving entire attribute set.
      *
      * @param existingId
      *     the id of the resource to update
@@ -364,11 +371,10 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      *     A multi-valued list of strings indicating the names of resource attributes to be removed from the default set
      *     of attributes to return
      */
-
-    public SCIMResponse updateWithPUT (String existingId,
-                                       String scimObjectString,
-                                       String attributes,
-                                       String excludeAttributes) {
+    public SCIMResponse updateWithPUT(String existingId,
+                                      String scimObjectString,
+                                      String attributes,
+                                      String excludeAttributes) {
 
 
         try {
@@ -421,17 +427,17 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
     }
 
     /**
-     * will update an existing resource with the patch operation
+     * will update an existing resource with the patch operation.
      *
      * @param existingId
      *     the id of the resource that should be updated
      * @param scimObjectString
      *     the request body
      */
-    public SCIMResponse updateWithPATCH (String existingId,
-                                         String scimObjectString,
-                                         String attributes,
-                                         String excludeAttributes) {
+    SCIMResponse updateWithPATCH(String existingId,
+                                 String scimObjectString,
+                                 String attributes,
+                                 String excludeAttributes) {
         try {
             // obtain the json decoder.
             JSONDecoder decoder = getDecoder();
@@ -495,7 +501,8 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
 
             // get the URIs of required attributes which must be given a value
             Map<String, Boolean> requiredAttributes = ResourceManagerUtil.getOnlyRequiredAttributesURIs(
-                (SCIMResourceTypeSchema) CopyUtil.deepCopy(schema), attributes, excludeAttributes);
+                (SCIMResourceTypeSchema) CopyUtil.deepCopy(schema), attributes,
+                excludeAttributes);
 
 
             R validatedResource = (R) ServerSideValidator.validateUpdatedSCIMObject(originalResource, newResource,
@@ -542,7 +549,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      *
      * @return the listed resource
      */
-    public ListedResource createListedResource (List<Object> resources, int startIndex, int totalResults) {
+    public ListedResource createListedResource(List<Object> resources, int startIndex, int totalResults) {
         ListedResource listedResource = new ListedResource();
         listedResource.setSchema(SCIMConstants.LISTED_RESOURCE_CORE_SCHEMA_URI);
         listedResource.setTotalResults(totalResults);
@@ -554,7 +561,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
         return listedResource;
     }
 
-    public ResourceHandler<R> getResourceHandler () {
+    public ResourceHandler<R> getResourceHandler() {
         return resourceHandler;
     }
 }

@@ -130,7 +130,8 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      * full representation can be useful to the client, enabling it to correlate the client and server views of the new
      * Resource. When a Resource is created, its uri must be returned in the response Location header.}
      */
-    public SCIMResponse create(String scimObjectString, String attributes, String excludeAttributes) {
+    public SCIMResponse create(String scimObjectString, String attributes,
+                               String excludeAttributes) {
         try {
             // returns core-resource schema
             SCIMResourceTypeSchema schema = resourceHandler.getResourceSchema();
@@ -434,10 +435,10 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      * @param scimObjectString
      *     the request body
      */
-    SCIMResponse updateWithPATCH(String existingId,
-                                 String scimObjectString,
-                                 String attributes,
-                                 String excludeAttributes) {
+    public SCIMResponse updateWithPATCH(String existingId,
+                                        String scimObjectString,
+                                        String attributes,
+                                        String excludeAttributes) {
         try {
             // obtain the json decoder.
             JSONDecoder decoder = getDecoder();
@@ -564,4 +565,5 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
     public ResourceHandler<R> getResourceHandler() {
         return resourceHandler;
     }
+
 }

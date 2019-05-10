@@ -202,14 +202,15 @@
 
     <distributionManagement>
         <repository>
-            <id>externer-nexus</id>
-            <name>Release</name>
-            <url>https://nexus-ext.governikus.de/nexus/content/repositories/DVDV2/</url>
+            <id>governikus-nexus</id>
+            <name>DVDV2-Releases</name>
+            <url>https://nexus-ext.governikus.de/nexus/content/repositories/DVDV2-Releases/</url>
         </repository>
         <snapshotRepository>
-            <id>externer-nexus</id>
-            <url>https://nexus-ext.governikus.de/nexus/content/repositories/snapshots/</url>
             <uniqueVersion>true</uniqueVersion>
+            <id>governikus-nexus</id>
+            <name>DVDV2-Snapshots</name>
+            <url>https://nexus-ext.governikus.de/nexus/content/repositories/DVDV2-Snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 

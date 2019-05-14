@@ -18,11 +18,15 @@
 
 package org.wso2.charon3.core.objects.plainobjects;
 
+import java.io.Serializable;
+
 /**
  * This class representation can be used to easily add an address to an
  * {@link org.wso2.charon3.core.objects.AbstractSCIMObject} object
  */
-public class ScimAddress {
+public class ScimAddress implements Serializable {
+
+    private static final long serialVersionUID = -1717513949217197259L;
 
     /**
      * formatted The full mailing address, formatted for display or use with a mailing label. This attribute

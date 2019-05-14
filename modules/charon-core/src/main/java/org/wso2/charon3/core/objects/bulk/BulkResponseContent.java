@@ -20,10 +20,15 @@ package org.wso2.charon3.core.objects.bulk;
 
 import org.wso2.charon3.core.protocol.SCIMResponse;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public class BulkResponseContent {
+public class BulkResponseContent implements Serializable {
+
+    private static final long serialVersionUID = 3950863209398117814L;
+
     private String bulkID;
     private SCIMResponse scimResponse;
     private String version;

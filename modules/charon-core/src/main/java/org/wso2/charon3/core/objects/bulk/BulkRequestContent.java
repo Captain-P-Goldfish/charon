@@ -17,10 +17,15 @@
 */
 package org.wso2.charon3.core.objects.bulk;
 
+import java.io.Serializable;
+
 /**
  *
  */
-public class BulkRequestContent {
+public class BulkRequestContent implements Serializable {
+
+    private static final long serialVersionUID = -6689480957726062989L;
+
     private String bulkID;
     private String method;
     private String data;

@@ -17,13 +17,17 @@
 */
 package org.wso2.charon3.core.objects.bulk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  */
-public class BulkResponseData {
+public class BulkResponseData implements Serializable {
+
+    private static final long serialVersionUID = -7910718569134129078L;
+
     private List<String> schemas;
     private List<BulkResponseContent> userOperationResponse;
     private List<BulkResponseContent> groupOperationResponse;

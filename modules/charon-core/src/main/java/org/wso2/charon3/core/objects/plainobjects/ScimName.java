@@ -18,11 +18,15 @@
 
 package org.wso2.charon3.core.objects.plainobjects;
 
+import java.io.Serializable;
+
 /**
  * This class representation can be used to easily add a scim name to an
  * {@link org.wso2.charon3.core.objects.AbstractSCIMObject} object
  */
-public class ScimName {
+public class ScimName implements Serializable {
+
+    private static final long serialVersionUID = -6320796023166100414L;
 
     /**
      * The full name, including all middle names, titles, and suffixes as appropriate, formatted for display

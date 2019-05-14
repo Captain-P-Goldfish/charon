@@ -8,6 +8,7 @@ import org.wso2.charon3.core.schema.SCIMConstants;
 import org.wso2.charon3.core.schema.SCIMDefinitions;
 import org.wso2.charon3.core.utils.LambdaExceptionUtils;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import static org.wso2.charon3.core.schema.SCIMDefinitions.FilterOperation.PR;
@@ -19,8 +20,10 @@ import static org.wso2.charon3.core.schema.SCIMDefinitions.FilterOperation.PR;
  * <br>
  * @author Pascal Knueppel
  */
-public class FilterBuilder {
+public class FilterBuilder implements Serializable {
 
+    private static final long serialVersionUID = 7231267409086617614L;
+    
     private static final String ESCAPE_STRING_LITERAL = "\"";
 
     /**

@@ -21,13 +21,17 @@ package org.wso2.charon3.core.objects.bulk;
 import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  */
-public class BulkData {
+public class BulkData implements Serializable {
+
+    private static final long serialVersionUID = 6622765783764001273L;
+
     private List<String> schemas;
     private int failOnErrors = 2;
     List<User> userList;

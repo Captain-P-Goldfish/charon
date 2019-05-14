@@ -20,11 +20,15 @@ package org.wso2.charon3.core.objects.plainobjects;
 
 import java.util.Objects;
 
+import java.io.Serializable;
+
 /**
  * this class representation can be used to easily add a multi valued complex type representation like an email
  * or a phonenumber to an {@link org.wso2.charon3.core.objects.AbstractSCIMObject} object.
  */
-public class MultiValuedComplexType {
+public class MultiValuedComplexType implements Serializable {
+
+    private static final long serialVersionUID = -1042003315925434576L;
 
     /**
      * A label indicating the attribute's function, e.g., "work" or "home".

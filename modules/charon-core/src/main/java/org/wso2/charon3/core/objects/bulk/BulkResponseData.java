@@ -17,6 +17,7 @@
  */
 package org.wso2.charon3.core.objects.bulk;
 
+import java.io.Serializable;
 import org.wso2.charon3.core.schema.SCIMConstants;
 
 import java.util.ArrayList;
@@ -25,8 +26,9 @@ import java.util.List;
 /**
  * represents a response of a bulk request.
  */
-public class BulkResponseData {
+public class BulkResponseData implements Serializable {
 
+    private static final long serialVersionUID = -7910718569134129078L;
     private List<String> schemas;
 
     /**

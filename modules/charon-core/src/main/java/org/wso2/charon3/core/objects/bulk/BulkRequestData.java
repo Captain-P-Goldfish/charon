@@ -17,13 +17,16 @@
  */
 package org.wso2.charon3.core.objects.bulk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * represents the data of a bulk request.
  */
-public class BulkRequestData {
+public class BulkRequestData implements Serializable {
+
+    private static final long serialVersionUID = 956255095430869372L;
 
     /**
      * the schemas that were added in the schema-tag in the request.

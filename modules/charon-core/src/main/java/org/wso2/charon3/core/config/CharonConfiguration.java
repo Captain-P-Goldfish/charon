@@ -37,7 +37,7 @@ import static org.wso2.charon3.core.utils.LambdaExceptionUtils.rethrowFunction;
 import static org.wso2.charon3.core.utils.LambdaExceptionUtils.rethrowSupplier;
 
 /**
- * This class contains the charon related configurations.
+ * This class contains the charon related configurations..
  */
 public final class CharonConfiguration extends AbstractSCIMObject {
 

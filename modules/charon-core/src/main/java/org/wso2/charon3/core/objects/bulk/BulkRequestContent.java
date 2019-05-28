@@ -20,7 +20,7 @@ package org.wso2.charon3.core.objects.bulk;
 import java.io.Serializable;
 
 /**
- *
+ *.
  */
 public class BulkRequestContent implements Serializable {
 

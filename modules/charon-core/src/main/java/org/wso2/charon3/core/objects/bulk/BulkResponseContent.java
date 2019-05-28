@@ -23,7 +23,7 @@ import org.wso2.charon3.core.protocol.SCIMResponse;
 import java.io.Serializable;
 
 /**
- *
+ *.
  */
 public class BulkResponseContent implements Serializable {
 

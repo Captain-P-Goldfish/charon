@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 /**
- * this corresponds to the /.search request object
+ * this corresponds to the /.search request object.
  * <p>
  * Clients MAY execute queries without passing parameters on the URL by
  * using the HTTP POST verb combined with the "/.search" path extension.

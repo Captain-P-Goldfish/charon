@@ -151,6 +151,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
             if (createdResource != null) {
                 // need to remove attributes that should never be returned
                 ServerSideValidator.validateReturnedAttributes(createdResource, attributes, excludeAttributes);
+
                 encodedResource = getEncoder().encodeSCIMObject(createdResource);
                 // add location header
                 httpHeaders.put(SCIMConstants.LOCATION_HEADER,
@@ -235,6 +236,8 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
             return listResources(startIndexInt, countInt, sortBy, sortOrder, domainName, attributes, excludeAttributes,
                 rootNode);
 
+        } catch (AbstractCharonException e) {
+            return AbstractResourceManager.encodeSCIMException(e);
         } catch (IOException e) {
             String error = "Error in tokenization of the input filter";
             CharonException charonException = new CharonException(error);
@@ -565,5 +568,4 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
     public ResourceHandler<R> getResourceHandler() {
         return resourceHandler;
     }
-
 }

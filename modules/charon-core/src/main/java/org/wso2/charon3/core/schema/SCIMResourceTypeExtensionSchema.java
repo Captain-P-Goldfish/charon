@@ -6,7 +6,7 @@ import java.util.Set;
 import static org.wso2.charon3.core.schema.SCIMDefinitions.DataType.COMPLEX;
 
 /**
- * this class represents a scim schema extension for a resource.<br>
+ * this class represents a scim schema extension for a resource.<br>.
  *
  * created at: 18.03.2019 - 12:50
  *

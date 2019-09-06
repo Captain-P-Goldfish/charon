@@ -87,7 +87,7 @@ public class JSONDecoder {
     }
 
     /**
-     * decodes a string that should match the {@link SCIMConstants#LISTED_RESOURCE_CORE_SCHEMA_URI} scheme to
+     * decodes a string that should match the {@link SCIMConstants#LISTED_RESOURCE_CORE_SCHEMA_URI} scheme to.
      * {@link ListedResource} object that holds the parsed objects.
      *
      * @param scimResourceString the listed resource string
@@ -279,9 +279,8 @@ public class JSONDecoder {
      * @param jsonObject the jsonObject that might hold an int-value under the given key
      * @param name       the name of the attribute in the json structure that should be retrieved as int
      * @return the int value of the key
-     * @throws CharonException if the value under the given key is not an int value
      */
-    private Optional<Integer> getIntValueFromJson(JSONObject jsonObject, String name) throws CharonException {
+    private Optional<Integer> getIntValueFromJson(JSONObject jsonObject, String name) {
         try {
             return Optional.of(jsonObject.getInt(name));
         } catch (JSONException e) {

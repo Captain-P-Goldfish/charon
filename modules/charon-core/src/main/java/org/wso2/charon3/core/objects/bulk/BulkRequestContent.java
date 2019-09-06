@@ -19,6 +19,8 @@ package org.wso2.charon3.core.objects.bulk;
 
 import java.io.Serializable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  *.
  */
@@ -48,6 +50,7 @@ public class BulkRequestContent implements Serializable {
         version = null;
     }
 
+    @SuppressFBWarnings("NM_CONFUSING")
     public String getBulkID() {
         return bulkID;
     }

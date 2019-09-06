@@ -6,7 +6,7 @@ import org.wso2.charon3.core.schema.SCIMResourceTypeExtensionSchema;
 import org.wso2.charon3.core.schema.SCIMSchemaDefinitions;
 
 /**
- * this class serves as a wrapper class for user that helps reading the enterprise user attributes.<br>
+ * this class serves as a wrapper class for user that helps reading the enterprise user attributes.<br>.
  * created at: 18.03.2019 - 16:15 <br>
  * <br>
  * @author Pascal Knueppel

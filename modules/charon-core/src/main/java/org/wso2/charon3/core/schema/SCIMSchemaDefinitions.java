@@ -487,7 +487,7 @@ public class SCIMSchemaDefinitions {
                 SCIMDefinitions.Mutability.READ_WRITE, SCIMDefinitions.Returned.DEFAULT,
                 SCIMDefinitions.Uniqueness.NONE, null, null, null);
 
-        //A label indicating the attribute's function..
+        //A label indicating the attribute's function.
         public static final SCIMAttributeSchema ROLES_TYPE =
             SCIMAttributeSchema.createSCIMAttributeSchema(SCIMConstants.UserSchemaConstants.ROLES_TYPE_URI,
                 SCIMConstants.CommonSchemaConstants.TYPE,
@@ -527,7 +527,7 @@ public class SCIMSchemaDefinitions {
                 SCIMDefinitions.Mutability.READ_WRITE, SCIMDefinitions.Returned.DEFAULT,
                 SCIMDefinitions.Uniqueness.NONE, null, null, null);
 
-        //A label indicating the attribute's function..
+        //A label indicating the attribute's function.
         public static final SCIMAttributeSchema X509CERTIFICATES_TYPE =
             SCIMAttributeSchema.createSCIMAttributeSchema(SCIMConstants.UserSchemaConstants
                     .X509CERTIFICATES_TYPE_URI,
@@ -1583,7 +1583,7 @@ public class SCIMSchemaDefinitions {
             SchemaSchemaDefinition.ATTRIBUTES);
 
     /*
-     * **********SCIM defined Enterprise User Resource Schema.****************************
+     * **********SCIM defined Enterprise User Resource Schema.****************************.
      */
     public static final SCIMResourceTypeExtensionSchema SCIM_ENTERPRISE_USER_SCHEMA =
         SCIMResourceTypeExtensionSchema.createSCIMResourcetypeExtension(
@@ -1599,7 +1599,7 @@ public class SCIMSchemaDefinitions {
         );
 
     /*
-     * **********SCIM defined User Resource Schema.****************************
+     * **********SCIM defined User Resource Schema.****************************.
      */
     public static final SCIMResourceTypeSchema SCIM_USER_SCHEMA =
         SCIMResourceTypeSchema.createSCIMResourceSchema(

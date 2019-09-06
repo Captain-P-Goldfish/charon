@@ -238,6 +238,75 @@ public class Group extends AbstractSCIMObject {
     }
 
     /**
+     * Set a member to the group, where member will have three default attributes such as name, value and $ref.
+     *
+     * @param user
+     * @throws BadRequestException
+     * @throws CharonException
+     */
+    public void setMember(User user) throws BadRequestException, CharonException {
+
+        if (this.isAttributeExist(SCIMConstants.GroupSchemaConstants.MEMBERS)) {
+            MultiValuedAttribute members = (MultiValuedAttribute) this.attributeList
+                    .get(SCIMConstants.GroupSchemaConstants.MEMBERS);
+            ComplexAttribute complexAttribute = setMemberCommon(user);
+            members.setAttributeValue(complexAttribute);
+        } else {
+            MultiValuedAttribute members = new MultiValuedAttribute(SCIMConstants.GroupSchemaConstants.MEMBERS);
+            DefaultAttributeFactory.createAttribute(SCIMSchemaDefinitions.SCIMGroupSchemaDefinition.MEMBERS, members);
+            ComplexAttribute complexAttribute = setMemberCommon(user);
+            members.setAttributeValue(complexAttribute);
+            this.setAttribute(members);
+        }
+    }
+
+    /**
+     * Create member attribute with three default attributes such as name, value and $ref.
+     *
+     * @param user
+     * @return
+     * @throws BadRequestException
+     * @throws CharonException
+     */
+    private ComplexAttribute setMemberCommon(User user) throws BadRequestException, CharonException {
+
+        String userId = user.getId();
+        String userName = user.getUserName();
+        String reference = user.getLocation();
+
+        ComplexAttribute complexAttribute = new ComplexAttribute();
+        complexAttribute.setName(SCIMConstants.GroupSchemaConstants.MEMBERS + "_" + userId + SCIMConstants.DEFAULT);
+
+        if (userId != null) {
+            SimpleAttribute valueSimpleAttribute =
+                    new SimpleAttribute(SCIMConstants.CommonSchemaConstants.VALUE, userId);
+            DefaultAttributeFactory
+                    .createAttribute(SCIMSchemaDefinitions.SCIMGroupSchemaDefinition.VALUE, valueSimpleAttribute);
+            complexAttribute.setSubAttribute(valueSimpleAttribute);
+        }
+
+        if (userName != null) {
+            SimpleAttribute displaySimpleAttribute = new SimpleAttribute(SCIMConstants.GroupSchemaConstants.DISPLAY,
+                    userName);
+            DefaultAttributeFactory
+                    .createAttribute(SCIMSchemaDefinitions.SCIMGroupSchemaDefinition.DISPLAY, displaySimpleAttribute);
+            complexAttribute.setSubAttribute(displaySimpleAttribute);
+        }
+
+        if (reference != null) {
+            SimpleAttribute referenceSimpleAttribute = new SimpleAttribute(SCIMConstants.CommonSchemaConstants.REF,
+                    reference);
+            DefaultAttributeFactory
+                    .createAttribute(SCIMSchemaDefinitions.SCIMGroupSchemaDefinition.REF, referenceSimpleAttribute);
+            complexAttribute.setSubAttribute(referenceSimpleAttribute);
+        }
+
+        DefaultAttributeFactory
+                .createAttribute(SCIMSchemaDefinitions.SCIMGroupSchemaDefinition.MEMBERS, complexAttribute);
+        return complexAttribute;
+    }
+
+    /**
      * set the schemas for scim object -group.
      */
     public void setSchemas() {

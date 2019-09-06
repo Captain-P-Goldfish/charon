@@ -41,12 +41,12 @@ public abstract class AbstractResourceManager {
     private static JSONDecoder decoder = new JSONDecoder();
 
     /**
-     * Keeps  a map of endpoint urls of the exposed resources..
+     * Keeps  a map of endpoint urls of the exposed resources.
      */
     private static Map<String, String> endpointURLMap;
 
     /**
-     * Returns the encoder for json..
+     * Returns the encoder for json.
      *
      * @return JSONEncoder - An json encoder for encoding data
      */
@@ -55,7 +55,7 @@ public abstract class AbstractResourceManager {
     }
 
     /**
-     * Returns the decoder for json..
+     * Returns the decoder for json.
      *
      *
      * @return JSONDecoder - An json decoder for decoding data
@@ -65,7 +65,7 @@ public abstract class AbstractResourceManager {
     }
 
     /**
-     * Returns the endpoint according to the resource..
+     * Returns the endpoint according to the resource.
      *
      * @param resource -Resource type
      * @return endpoint URL

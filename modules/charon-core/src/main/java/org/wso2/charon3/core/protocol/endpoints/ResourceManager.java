@@ -175,7 +175,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
     }
 
     /**
-     * Method of the ResourceManager that is mapped to HTTP Delete method..
+     * Method of the ResourceManager that is mapped to HTTP Delete method.
      *
      * @param id
      *     unique resource id
@@ -375,6 +375,7 @@ public class ResourceManager<R extends AbstractSCIMObject> extends AbstractResou
      *     A multi-valued list of strings indicating the names of resource attributes to be removed from the default set
      *     of attributes to return
      */
+
     public SCIMResponse updateWithPUT(String existingId,
                                       String scimObjectString,
                                       String attributes,

@@ -1,5 +1,6 @@
 package org.wso2.charon3.core.utils.codeutils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,6 +9,7 @@ import org.wso2.charon3.core.objects.AbstractSCIMObject;
 import org.wso2.charon3.core.schema.SCIMConstants;
 import org.wso2.charon3.core.utils.LambdaExceptionUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +51,7 @@ public class BulkRequestBuilder {
     public static final int MINIMUM_PAYLOAD = 164;
 
     /**
-     * An integer specifying the number of errors that the service provider will accept before the operation is.
+     * An integer specifying the number of errors that the service provider will accept before the operation is
      * terminated and an error response is returned.  OPTIONAL in a request.  Not valid in a response.
      */
     private Integer failOnErrors;
@@ -58,7 +60,7 @@ public class BulkRequestBuilder {
     }
 
     /**
-     * creates the builder class and a bulk operation that must be configured..
+     * creates the builder class and a bulk operation that must be configured.
      *
      * @param failOnErrors
      *     An integer specifying the number of errors that the service provider will accept before the operation is
@@ -73,7 +75,7 @@ public class BulkRequestBuilder {
     }
 
     /**
-     * creates the builder class and a bulk operation that must be configured..
+     * creates the builder class and a bulk operation that must be configured.
      *
      * @return the next operation to use
      */
@@ -173,7 +175,8 @@ public class BulkRequestBuilder {
                  j++) {
                 BulkRequestOperation bulkRequestOperation = bulkOperationsList.get(i + j);
                 operations.put(bulkRequestOperation.toJsonObject());
-                if (request.toString().getBytes().length + operations.toString().getBytes().length > maximumPaylod) {
+                if (request.toString().getBytes(StandardCharsets.UTF_8).length +
+                    operations.toString().getBytes(StandardCharsets.UTF_8).length > maximumPaylod) {
                     operations.remove(operations.length() - 1);
                     indexJump = j;
                     break;
@@ -186,14 +189,14 @@ public class BulkRequestBuilder {
     }
 
     /**
-     * @see #bulkOperationsList.
+     * @see #bulkOperationsList
      */
     public List<BulkRequestOperation> getBulkOperationsList() {
         return bulkOperationsList;
     }
 
     /**
-     * @see #bulkOperationsList.
+     * @see #bulkOperationsList
      */
     public BulkRequestBuilder setBulkOperationsList(
         List<BulkRequestOperation> bulkOperationsList) {
@@ -202,14 +205,14 @@ public class BulkRequestBuilder {
     }
 
     /**
-     * @see #failOnErrors.
+     * @see #failOnErrors
      */
     public Integer getFailOnErrors() {
         return failOnErrors;
     }
 
     /**
-     * @see #failOnErrors.
+     * @see #failOnErrors
      */
     public BulkRequestBuilder setFailOnErrors(Integer failOnErrors) {
         this.failOnErrors = failOnErrors;
@@ -231,20 +234,20 @@ public class BulkRequestBuilder {
         private BulkRequestBuilder bulkRequestBuilder;
 
         /**
-         * The HTTP method of the current operation.  Possible values are "POST", "PUT", "PATCH", or "DELETE"..
+         * The HTTP method of the current operation.  Possible values are "POST", "PUT", "PATCH", or "DELETE".
          * REQUIRED.
          */
         private Method method;
 
         /**
-         * The resource's relative path to the SCIM service provider's root.  If "method" is "POST", the value must.
+         * The resource's relative path to the SCIM service provider's root.  If "method" is "POST", the value must
          * specify a resource type endpoint, e.g., /Users or /Groups, whereas all other "method" values must specify the
          * path to a specific resource, e.g., /Users/2819c223-7f76-453a-919d-413861904646.  REQUIRED in a request.
          */
         private String path;
 
         /**
-         * The transient identifier of a newly created resource, unique within a bulk request and created by the client.
+         * The transient identifier of a newly created resource, unique within a bulk request and created by the client
          * The bulkId serves as a surrogate resource id enabling clients to uniquely identify newly created resources in
          * the response and cross-reference new resources in and across operations within a bulk request.  REQUIRED when
          * "method" is "POST".
@@ -252,13 +255,13 @@ public class BulkRequestBuilder {
         private String bulkId;
 
         /**
-         * The current resource version.  Version MAY be used if the service provider supports entity-tags (ETags).
+         * The current resource version.  Version MAY be used if the service provider supports entity-tags (ETags)
          * (Section 2.3 of [RFC7232]) and "method" is "PUT", "PATCH", or "DELETE".
          */
         private String version;
 
         /**
-         * The resource data as it would appear for a single SCIM POST, PUT, or PATCH operation.  REQUIRED in a request.
+         * The resource data as it would appear for a single SCIM POST, PUT, or PATCH operation.  REQUIRED in a request
          * when "method" is "POST", "PUT", or "PATCH".
          */
         private AbstractSCIMObject data;
@@ -311,7 +314,7 @@ public class BulkRequestBuilder {
         }
 
         /**
-         * @see #bulkRequestBuilder.
+         * @see #bulkRequestBuilder
          */
         public BulkRequestBuilder getBulkRequestBuilder() {
             return bulkRequestBuilder;
@@ -337,14 +340,14 @@ public class BulkRequestBuilder {
         }
 
         /**
-         * @see #method.
+         * @see #method
          */
         public Method getMethod() {
             return method;
         }
 
         /**
-         * @see #method.
+         * @see #method
          */
         public BulkRequestOperation setMethod(Method method) {
             this.method = method;
@@ -355,14 +358,14 @@ public class BulkRequestBuilder {
         }
 
         /**
-         * @see #path.
+         * @see #path
          */
         public String getPath() {
             return path;
         }
 
         /**
-         * @see #path.
+         * @see #path
          */
         public BulkRequestOperation setPath(String path) {
             this.path = path;
@@ -370,14 +373,15 @@ public class BulkRequestBuilder {
         }
 
         /**
-         * @see #bulkId.
+         * @see #bulkId
          */
+        @SuppressFBWarnings("NM_CONFUSING")
         public String getBulkId() {
             return bulkId;
         }
 
         /**
-         * @see #bulkId.
+         * @see #bulkId
          */
         public BulkRequestOperation setBulkId(String bulkId) {
             this.bulkId = bulkId;
@@ -385,14 +389,14 @@ public class BulkRequestBuilder {
         }
 
         /**
-         * @see #version.
+         * @see #version
          */
         public String getVersion() {
             return version;
         }
 
         /**
-         * @see #version.
+         * @see #version
          */
         public BulkRequestOperation setVersion(String version) {
             this.version = version;
@@ -400,14 +404,14 @@ public class BulkRequestBuilder {
         }
 
         /**
-         * @see #data.
+         * @see #data
          */
         public AbstractSCIMObject getData() {
             return data;
         }
 
         /**
-         * @see #data.
+         * @see #data
          */
         public BulkRequestOperation setData(AbstractSCIMObject data) {
             this.data = data;

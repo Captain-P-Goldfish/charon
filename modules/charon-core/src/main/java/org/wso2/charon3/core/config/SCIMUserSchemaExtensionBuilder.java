@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * This class is to build the extension user schema though the config file..
+ * This class is to build the extension user schema though the config file.
  */
 public class SCIMUserSchemaExtensionBuilder {
 

@@ -33,7 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This class acts as an utility class for attributes..
+ * This class acts as an utility class for attributes.
  */
 public class AttributeUtil {
 
@@ -133,7 +133,7 @@ public class AttributeUtil {
         }
     }
 
-    public static String parseReference (String referenceString) throws CharonException {
+    public static String parseReference (String referenceString) {
         //TODO: Need a better way for doing this. Think of the way to handle reference types
         return referenceString;
     }
@@ -157,7 +157,7 @@ public class AttributeUtil {
      *
      * @param booleanValue
      */
-    public static Boolean parseBoolean (Object booleanValue) throws BadRequestException {
+    public static Boolean parseBoolean (Object booleanValue) {
         try {
             return ((Boolean) booleanValue);
         } catch (Exception e) {

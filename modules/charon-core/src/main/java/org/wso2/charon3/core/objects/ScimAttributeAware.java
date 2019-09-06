@@ -53,14 +53,14 @@ import static org.wso2.charon3.core.utils.LambdaExceptionUtils.rethrowSupplier;
 
 
 /**
- * This class is used as a helper implementation and shall provide additional functionality to the {@link
- * AbstractSCIMObject} that will help reading, replacing attributes from objects and also an equals implementation of
- * {@link AbstractSCIMObject}s is added.
+ * This class is used as a helper implementation and shall provide additional functionality to the.
+ * {@link AbstractSCIMObject} that will help reading, replacing attributes from objects and also an equals
+ * implementation of {@link AbstractSCIMObject}s is added.
  */
 public abstract class ScimAttributeAware {
 
     /**
-     * @return the id of the SCIM {@link #getResource()}
+     * @return the id of the SCIM {@link #getResource()}.
      */
     public String getId() {
 
@@ -159,7 +159,7 @@ public abstract class ScimAttributeAware {
         SCIMAttributeSchema metaDefinition = SCIMSchemaDefinitions.META;
         SCIMAttributeSchema resourceTypeDefinition = SCIMSchemaDefinitions.CREATED;
         return getComplexAttribute(metaDefinition).map(meta -> getSimpleAttribute(resourceTypeDefinition, meta).map(
-            rethrowFunction(simpleAttribute -> simpleAttribute.getDateValue().getTime())).orElse(null)).orElse(null);
+            rethrowFunction(simpleAttribute -> simpleAttribute.getInstantValue().toEpochMilli())).orElse(null)).orElse(null);
     }
 
     /**
@@ -262,7 +262,7 @@ public abstract class ScimAttributeAware {
     }
 
     /**
-     * @return the created timestamp as long of the SCIM {@link #getResource()} in UTC
+     * @return the last modified timestamp as long of the SCIM {@link #getResource()} in UTC
      */
     public Long getLastModifiedLong() {
 

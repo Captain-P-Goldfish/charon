@@ -372,8 +372,7 @@ public class ResourceManagerUtil {
      * @param attributeName
      * @throws CharonException
      */
-    private static void removeAttributesFromList(List<AttributeSchema> attributeSchemaList, String attributeName)
-        throws CharonException {
+    private static void removeAttributesFromList(List<AttributeSchema> attributeSchemaList, String attributeName) {
         List<AttributeSchema> tempList = (List<AttributeSchema>) CopyUtil.deepCopy(attributeSchemaList);
         int count = 0;
         for (AttributeSchema attributeSchema : tempList) {
@@ -399,7 +398,7 @@ public class ResourceManagerUtil {
      */
     public static int processCount(String countStr) throws BadRequestException {
 
-        if (countStr == null || countStr.isEmpty() || !countStr.matches("\\d+")) {
+        if (countStr == null || countStr.trim().isEmpty() || !countStr.matches("\\d+")) {
             return CharonConfiguration.getInstance().getFilter().getMaxResults();
         }
 
@@ -424,6 +423,7 @@ public class ResourceManagerUtil {
 
     /**
      * Process startIndex value according to SCIM 2.0 specification.
+     *
      * @param startIndexStr
      *
      * @return
@@ -433,7 +433,7 @@ public class ResourceManagerUtil {
     public static int processStartIndex(String startIndexStr) throws BadRequestException {
 
         int startIndex = 1;
-        if (startIndexStr == null || startIndexStr.isEmpty() || !startIndexStr.matches("\\d+")) {
+        if (startIndexStr == null || startIndexStr.trim().isEmpty() || !startIndexStr.matches("\\d+")) {
             return startIndex;
         }
 

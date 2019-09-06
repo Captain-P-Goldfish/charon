@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class is a blueprint of MultiValuedAttribute defined in SCIM Core Schema Spec..
+ * This class is a blueprint of MultiValuedAttribute defined in SCIM Core Schema Spec.
  */
 public class MultiValuedAttribute extends AbstractAttribute {
 

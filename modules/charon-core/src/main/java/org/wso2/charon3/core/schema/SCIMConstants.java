@@ -30,10 +30,10 @@ public class SCIMConstants {
     public static final String MESSAGE_SCHEMA_URI = "urn:ietf:params:scim:api:messages:2.0";
 
     public static final String SERVICE_PROVIDER_CONFIG_SCHEMA_URI =
-        "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig";
+            "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig";
     public static final String RESOURCE_TYPE_SCHEMA_URI = CORE_SCHEMA_URI + ":ResourceType";
     public static final String SEARCH_SCHEMA_URI = MESSAGE_SCHEMA_URI + ":SearchRequest";
-    public static final String BULK_REQUEST_URI = "urn:ietf:params:scim:api:messages:2.0:BulkRequest";
+    public static final String BULK_REQUEST_URI = MESSAGE_SCHEMA_URI + ":BulkRequest";
     public static final String BULK_RESPONSE_URI = MESSAGE_SCHEMA_URI + ":BulkResponse";
     public static final String SCHEMA_URI = CORE_SCHEMA_URI + ":Schema";
 
@@ -42,10 +42,6 @@ public class SCIMConstants {
     public static final String JSON = "json";
 
     public static final String APPLICATION_JSON = "application/scim+json";
-    @Deprecated
-    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-    @Deprecated
-    public static final String DATE_TIME_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ss";
 
     /*Resource names as defined in SCIM Schema spec*/
     public static final String USER = "User";
@@ -552,7 +548,7 @@ public class SCIMConstants {
         public static final String DISPLAY_DESC = "A human-readable name for the Member";
         public static final String TYPE_DESC = "A label indicating the type of resource, e.g. 'User' or 'Group'";
 
-        /*******URIs of sub and multivalued attributes.**************/
+        /* ******URIs of sub and multivalued attributes.************* */
         public static final String VALUE_URI = CORE_SCHEMA_URI + ":" + GROUP + ":members.value";
         public static final String REF_URI = CORE_SCHEMA_URI + ":" + GROUP + ":members.$ref";
         public static final String DISPLAY_URI = CORE_SCHEMA_URI + ":" + GROUP + ":members.display";

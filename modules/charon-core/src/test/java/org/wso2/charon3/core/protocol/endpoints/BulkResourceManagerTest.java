@@ -94,6 +94,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 Matchers.blankOrNullString());
             Assertions.assertNotNull(bulkResponseContent.getStatus());
             MatcherAssert.assertThat(bulkResponseContent.getStatus(), Matchers.greaterThan(0));
+            Assertions.assertNull(bulkResponseContent.getResponse());
         });
     }
 
@@ -130,6 +131,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 Matchers.blankOrNullString());
             Assertions.assertNotNull(bulkResponseContent.getStatus());
             MatcherAssert.assertThat(bulkResponseContent.getStatus(), Matchers.greaterThan(0));
+            Assertions.assertNull(bulkResponseContent.getResponse());
         });
     }
 
@@ -172,6 +174,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 Matchers.emptyString());
             Assertions.assertNotNull(bulkResponseContent.getStatus());
             MatcherAssert.assertThat(bulkResponseContent.getStatus(), Matchers.greaterThan(0));
+            Assertions.assertNull(bulkResponseContent.getResponse());
         });
     }
 
@@ -212,6 +215,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 Matchers.emptyString());
             Assertions.assertNotNull(bulkResponseContent.getStatus());
             MatcherAssert.assertThat(bulkResponseContent.getStatus(), Matchers.greaterThan(0));
+            Assertions.assertNull(bulkResponseContent.getResponse());
         });
     }
 
@@ -255,6 +259,9 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
             Assertions.assertEquals(
                 ResponseCodeConstants.CODE_PRECONDITION_FAILED,
                 bulkResponseData.getOperationResponseList().get(1).getScimResponse().getResponseStatus());
+            bulkResponseData.getOperationResponseList().forEach(bulkResponseContent -> {
+                Assertions.assertNotNull(bulkResponseContent.getResponse());
+            });
         }));
 
         dynamicTestList.add(DynamicTest.dynamicTest("accept 1 error and give 1 error", () -> {
@@ -273,6 +280,9 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
             Assertions.assertEquals(
                 ResponseCodeConstants.CODE_PRECONDITION_FAILED,
                 bulkResponseData.getOperationResponseList().get(1).getScimResponse().getResponseStatus());
+            bulkResponseData.getOperationResponseList().forEach(bulkResponseContent -> {
+                Assertions.assertNotNull(bulkResponseContent.getResponse());
+            });
         }));
 
         dynamicTestList.add(DynamicTest.dynamicTest("accept 2 error and give 2 error", () -> {
@@ -292,6 +302,9 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
             Assertions.assertEquals(
                 ResponseCodeConstants.CODE_INTERNAL_ERROR,
                 bulkResponseData.getOperationResponseList().get(1).getScimResponse().getResponseStatus());
+            bulkResponseData.getOperationResponseList().forEach(bulkResponseContent -> {
+                Assertions.assertNotNull(bulkResponseContent.getResponse());
+            });
         }));
 
         dynamicTestList.add(DynamicTest.dynamicTest("accept 1 error and give 2 error", () -> {
@@ -311,6 +324,9 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
             Assertions.assertEquals(
                 ResponseCodeConstants.CODE_PRECONDITION_FAILED,
                 bulkResponseData.getOperationResponseList().get(1).getScimResponse().getResponseStatus());
+            bulkResponseData.getOperationResponseList().forEach(bulkResponseContent -> {
+                Assertions.assertNotNull(bulkResponseContent.getResponse());
+            });
         }));
 
         return dynamicTestList;

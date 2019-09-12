@@ -243,7 +243,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 ResponseCodeConstants.CODE_INTERNAL_ERROR,
                 bulkResponseData.getOperationResponseList().get(0).getScimResponse().getResponseStatus());
             Assertions.assertEquals(
-                ResponseCodeConstants.CODE_CREATED,
+                ResponseCodeConstants.CODE_PRECONDITION_FAILED,
                 bulkResponseData.getOperationResponseList().get(1).getScimResponse().getResponseStatus());
         }));
 
@@ -273,7 +273,7 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 ResponseCodeConstants.CODE_INTERNAL_ERROR,
                 bulkResponseData.getOperationResponseList().get(0).getScimResponse().getResponseStatus());
             Assertions.assertEquals(
-                ResponseCodeConstants.CODE_INTERNAL_ERROR,
+                ResponseCodeConstants.CODE_PRECONDITION_FAILED,
                 bulkResponseData.getOperationResponseList().get(1).getScimResponse().getResponseStatus());
         }));
 

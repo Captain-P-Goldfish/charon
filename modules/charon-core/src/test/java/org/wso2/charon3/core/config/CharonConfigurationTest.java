@@ -81,8 +81,6 @@ public class CharonConfigurationTest {
         Assertions.assertEquals(description, authenticationScheme.getDescription());
         Assertions.assertEquals(specUri, authenticationScheme.getSpecUri());
         Assertions.assertEquals(documentationUri, authenticationScheme.getDocumentationUri());
-
-        log.warn(new JSONEncoder().encodeSCIMObject(CharonConfiguration.getInstance()));
     }
 
     @Test
@@ -105,8 +103,6 @@ public class CharonConfigurationTest {
             SCIMSchemaDefinitions.SCIMServiceProviderConfigSchemaDefinition.AUTHENTICATION_SCHEMES.getName()));
         Assertions.assertFalse(decodedJsonObj.isNull(
             SCIMSchemaDefinitions.SCIMServiceProviderConfigSchemaDefinition.CHANGE_PASSWORD.getName()));
-
-        log.warn(encoded);
     }
 
 }

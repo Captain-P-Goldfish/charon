@@ -132,9 +132,26 @@ public class BulkResourceManager {
             AbstractResourceManager.getEncoder().encodeSCIMException(error), null);
     }
 
+    /**
+     * the failOnErrors parameter is an optional parameter within the bulk-request. If omitted the bulk request will
+     * process any operation even if some of the operations are failing. Otherwise the process will be aborted if the
+     * failOnErrors value has been exceeded by the errorCount value.<br>
+     *
+     * this method was implemented based on the example found in RFC7644 chapter 3.7.3
+     *
+     * @param failOnErrors
+     *     the maximum number of errors specified by the client
+     * @param errorCount
+     *     the current number of errors that has occured
+     *
+     * @return true if the bulk request should be aborted and rolled back, false else
+     */
     private boolean isFailOnErrorsExceeded(Integer failOnErrors, int errorCount) {
-        return failOnErrors != null &&
-            ((failOnErrors == 0 && errorCount > 0) || (errorCount > 0 && errorCount > failOnErrors));
+        if (failOnErrors == null) {
+            return false;
+        }
+        int failOn = failOnErrors < 1 ? 1 : failOnErrors;
+        return errorCount > 0 && errorCount >= failOn;
     }
 
     /**

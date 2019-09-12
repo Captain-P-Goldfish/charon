@@ -73,9 +73,13 @@ public class BulkRequestBuilderTest extends CharonInitializer implements FileRef
 
         BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(response.getResponseMessage());
         Assertions.assertEquals(2, bulkResponseData.getOperationResponseList().size());
+        Assertions.assertEquals(2, bulkResponseData.getSuccessfulOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getFailedOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getOmittedOperations().size());
         for (BulkResponseContent bulkResponseContent : bulkResponseData.getOperationResponseList()) {
             SCIMResponse scimResponse = bulkResponseContent.getScimResponse();
             Assertions.assertEquals(ResponseCodeConstants.CODE_CREATED, scimResponse.getResponseStatus());
+            Assertions.assertEquals(ResponseCodeConstants.CODE_CREATED, bulkResponseContent.getStatus());
         }
     }
 

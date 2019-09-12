@@ -1016,7 +1016,14 @@ public class JSONDecoder {
             for (int i = 0; i < operations.length(); i++) {
                 JSONObject operation = operations.getJSONObject(i);
                 BulkResponseContent responseContent = decodeBulkResponseOperation(operation);
-                bulkResponseData.getOperationResponseList().add(responseContent);
+                bulkResponseData.addOperationResponse(responseContent);
+                if (responseContent.getStatus() >= 200 && responseContent.getStatus() < 300) {
+                    bulkResponseData.addSuccessfulOperations(responseContent);
+                } else if (responseContent.getStatus() == ResponseCodeConstants.CODE_PRECONDITION_FAILED) {
+                    bulkResponseData.addOmittedOperations(responseContent);
+                } else {
+                    bulkResponseData.addFailedOperations(responseContent);
+                }
             }
 
             return bulkResponseData;
@@ -1045,6 +1052,7 @@ public class JSONDecoder {
         responseContent.setBulkID(bulkId);
         responseContent.setLocation(location);
         responseContent.setVersion(version);
+        responseContent.setStatus(Integer.parseInt(status));
         responseContent.setScimResponse(scimResponse);
         return responseContent;
     }

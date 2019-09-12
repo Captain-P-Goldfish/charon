@@ -77,6 +77,9 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
         log.trace(scimResponse.getResponseMessage());
         BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(scimResponse.getResponseMessage());
         Assertions.assertEquals(1, bulkResponseData.getOperationResponseList().size());
+        Assertions.assertEquals(1, bulkResponseData.getSuccessfulOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getFailedOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getOmittedOperations().size());
         bulkResponseData.getOperationResponseList().forEach(bulkResponseContent -> {
             Assertions.assertEquals(SCIMConstants.OperationalConstants.POST, bulkResponseContent.getMethod());
             MatcherAssert.assertThat(bulkResponseContent.getLocation(), Matchers.not(Matchers.blankOrNullString()));
@@ -89,6 +92,8 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 bulkResponseContent.getScimResponse().getResponseStatus());
             MatcherAssert.assertThat(bulkResponseContent.getScimResponse().getResponseMessage(),
                 Matchers.blankOrNullString());
+            Assertions.assertNotNull(bulkResponseContent.getStatus());
+            MatcherAssert.assertThat(bulkResponseContent.getStatus(), Matchers.greaterThan(0));
         });
     }
 
@@ -108,6 +113,9 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
         log.trace(scimResponse.getResponseMessage());
         BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(scimResponse.getResponseMessage());
         Assertions.assertEquals(2, bulkResponseData.getOperationResponseList().size());
+        Assertions.assertEquals(2, bulkResponseData.getSuccessfulOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getFailedOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getOmittedOperations().size());
         bulkResponseData.getOperationResponseList().forEach(bulkResponseContent -> {
             Assertions.assertEquals(SCIMConstants.OperationalConstants.POST, bulkResponseContent.getMethod());
             MatcherAssert.assertThat(bulkResponseContent.getLocation(), Matchers.not(Matchers.blankOrNullString()));
@@ -120,6 +128,8 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 bulkResponseContent.getScimResponse().getResponseStatus());
             MatcherAssert.assertThat(bulkResponseContent.getScimResponse().getResponseMessage(),
                 Matchers.blankOrNullString());
+            Assertions.assertNotNull(bulkResponseContent.getStatus());
+            MatcherAssert.assertThat(bulkResponseContent.getStatus(), Matchers.greaterThan(0));
         });
     }
 
@@ -145,6 +155,9 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
         log.trace(scimResponse.getResponseMessage());
         BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(scimResponse.getResponseMessage());
         Assertions.assertEquals(1, bulkResponseData.getOperationResponseList().size());
+        Assertions.assertEquals(1, bulkResponseData.getSuccessfulOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getFailedOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getOmittedOperations().size());
         bulkResponseData.getOperationResponseList().forEach(bulkResponseContent -> {
             Assertions.assertEquals(SCIMConstants.OperationalConstants.PUT, bulkResponseContent.getMethod());
             MatcherAssert.assertThat(bulkResponseContent.getLocation(), Matchers.not(Matchers.blankOrNullString()));
@@ -157,6 +170,8 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 bulkResponseContent.getScimResponse().getResponseStatus());
             MatcherAssert.assertThat(bulkResponseContent.getScimResponse().getResponseMessage(),
                 Matchers.emptyString());
+            Assertions.assertNotNull(bulkResponseContent.getStatus());
+            MatcherAssert.assertThat(bulkResponseContent.getStatus(), Matchers.greaterThan(0));
         });
     }
 
@@ -182,6 +197,9 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
         log.trace(scimResponse.getResponseMessage());
         BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(scimResponse.getResponseMessage());
         Assertions.assertEquals(1, bulkResponseData.getOperationResponseList().size());
+        Assertions.assertEquals(1, bulkResponseData.getSuccessfulOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getFailedOperations().size());
+        Assertions.assertEquals(0, bulkResponseData.getOmittedOperations().size());
         bulkResponseData.getOperationResponseList().forEach(bulkResponseContent -> {
             Assertions.assertEquals(SCIMConstants.OperationalConstants.DELETE, bulkResponseContent.getMethod());
             MatcherAssert.assertThat(bulkResponseContent.getLocation(), Matchers.blankOrNullString());
@@ -192,6 +210,8 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
                 bulkResponseContent.getScimResponse().getResponseStatus());
             MatcherAssert.assertThat(bulkResponseContent.getScimResponse().getResponseMessage(),
                 Matchers.emptyString());
+            Assertions.assertNotNull(bulkResponseContent.getStatus());
+            MatcherAssert.assertThat(bulkResponseContent.getStatus(), Matchers.greaterThan(0));
         });
     }
 
@@ -225,6 +245,10 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
             SCIMResponse scimResponse = bulkResourceManager.processBulkData(bulkRequest);
             Assertions.assertEquals(ResponseCodeConstants.CODE_OK, scimResponse.getResponseStatus());
             BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(scimResponse.getResponseMessage());
+            Assertions.assertEquals(2, bulkResponseData.getOperationResponseList().size());
+            Assertions.assertEquals(1, bulkResponseData.getFailedOperations().size());
+            Assertions.assertEquals(1, bulkResponseData.getOmittedOperations().size());
+            Assertions.assertEquals(0, bulkResponseData.getSuccessfulOperations().size());
             Assertions.assertEquals(
                 ResponseCodeConstants.CODE_INTERNAL_ERROR,
                 bulkResponseData.getOperationResponseList().get(0).getScimResponse().getResponseStatus());
@@ -239,11 +263,15 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
             SCIMResponse scimResponse = bulkResourceManager.processBulkData(bulkRequest);
             Assertions.assertEquals(ResponseCodeConstants.CODE_OK, scimResponse.getResponseStatus());
             BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(scimResponse.getResponseMessage());
+            Assertions.assertEquals(2, bulkResponseData.getOperationResponseList().size());
+            Assertions.assertEquals(1, bulkResponseData.getFailedOperations().size());
+            Assertions.assertEquals(1, bulkResponseData.getOmittedOperations().size());
+            Assertions.assertEquals(0, bulkResponseData.getSuccessfulOperations().size());
             Assertions.assertEquals(
                 ResponseCodeConstants.CODE_INTERNAL_ERROR,
                 bulkResponseData.getOperationResponseList().get(0).getScimResponse().getResponseStatus());
             Assertions.assertEquals(
-                ResponseCodeConstants.CODE_CREATED,
+                ResponseCodeConstants.CODE_PRECONDITION_FAILED,
                 bulkResponseData.getOperationResponseList().get(1).getScimResponse().getResponseStatus());
         }));
 
@@ -254,6 +282,10 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
             SCIMResponse scimResponse = bulkResourceManager.processBulkData(bulkRequest);
             Assertions.assertEquals(ResponseCodeConstants.CODE_OK, scimResponse.getResponseStatus());
             BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(scimResponse.getResponseMessage());
+            Assertions.assertEquals(2, bulkResponseData.getOperationResponseList().size());
+            Assertions.assertEquals(2, bulkResponseData.getFailedOperations().size());
+            Assertions.assertEquals(0, bulkResponseData.getOmittedOperations().size());
+            Assertions.assertEquals(0, bulkResponseData.getSuccessfulOperations().size());
             Assertions.assertEquals(
                 ResponseCodeConstants.CODE_INTERNAL_ERROR,
                 bulkResponseData.getOperationResponseList().get(0).getScimResponse().getResponseStatus());
@@ -269,11 +301,15 @@ class BulkResourceManagerTest extends CharonInitializer implements FileReference
             SCIMResponse scimResponse = bulkResourceManager.processBulkData(bulkRequest);
             Assertions.assertEquals(ResponseCodeConstants.CODE_OK, scimResponse.getResponseStatus());
             BulkResponseData bulkResponseData = JSON_DECODER.decodeBulkResponseData(scimResponse.getResponseMessage());
+            Assertions.assertEquals(2, bulkResponseData.getOperationResponseList().size());
+            Assertions.assertEquals(1, bulkResponseData.getFailedOperations().size());
+            Assertions.assertEquals(1, bulkResponseData.getOmittedOperations().size());
+            Assertions.assertEquals(0, bulkResponseData.getSuccessfulOperations().size());
             Assertions.assertEquals(
                 ResponseCodeConstants.CODE_INTERNAL_ERROR,
                 bulkResponseData.getOperationResponseList().get(0).getScimResponse().getResponseStatus());
             Assertions.assertEquals(
-                ResponseCodeConstants.CODE_INTERNAL_ERROR,
+                ResponseCodeConstants.CODE_PRECONDITION_FAILED,
                 bulkResponseData.getOperationResponseList().get(1).getScimResponse().getResponseStatus());
         }));
 

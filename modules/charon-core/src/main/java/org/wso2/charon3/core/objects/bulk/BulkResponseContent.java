@@ -18,12 +18,17 @@
 package org.wso2.charon3.core.objects.bulk;
 
 
+import org.apache.commons.lang3.StringUtils;
+import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.protocol.SCIMResponse;
+import org.wso2.charon3.core.protocol.endpoints.AbstractResourceManager;
+import org.wso2.charon3.core.utils.LambdaExceptionUtils;
 
 /**
  * Represents the response of a single bulk-operation.
  */
 public class BulkResponseContent {
+
 
     /**
      * The HTTP response status code for the requested operation. When indicating an error, the "response" attribute
@@ -69,6 +74,30 @@ public class BulkResponseContent {
      * other than a 200-series response, the response body MUST be
      * included.  For normal completion, the server MAY elect to omit
      * the response body.
+     *
+     * <p>the scimResponse member here refers to the "response" value in the following example</p>
+     *
+     * <pre>
+     *   HTTP/1.1 200 OK
+     *   Content-Type: application/scim+json
+     *
+     *   {
+     *     "schemas": ["urn:ietf:params:scim:api:messages:2.0:BulkResponse"],
+     *     "Operations": [
+     *       {
+     *         "method": "POST",
+     *         "bulkId": "qwerty",
+     *         "status": "400",
+     *         "response":{
+     *            "schemas": ["urn:ietf:params:scim:api:messages:2.0:Error"],
+     *            "scimType":"invalidSyntax"
+     *            "detail":"Request is unparsable, syntactically incorrect, or violates schema.",
+     *            "status":"400"
+     *         }
+     *       }
+     *     ]
+     *   }
+     * </pre>
      */
     // @formatter:on
     private SCIMResponse scimResponse;
@@ -105,6 +134,22 @@ public class BulkResponseContent {
 
     public void setScimResponse(SCIMResponse scimResponse) {
         this.scimResponse = scimResponse;
+    }
+
+    /**
+     * In RFC7644 the only examples containing a "response" value in the bulkResponse are the responses that define
+     * specific error messages. Therefore this exception parsed by parsing the content of {@link
+     * SCIMResponse#getResponseMessage()}.
+     *
+     * @return null if {@link #scimResponse} is null or the response message of that member is blank. Otherwise an
+     * {@link AbstractCharonException} is parsed from the content
+     */
+    public AbstractCharonException getResponse() {
+        if (scimResponse == null || StringUtils.isBlank(scimResponse.getResponseMessage())) {
+            return null;
+        }
+        return LambdaExceptionUtils.rethrowSupplier(
+            () -> AbstractResourceManager.getDecoder().decodeCharonException(scimResponse.getResponseMessage())).get();
     }
 
 

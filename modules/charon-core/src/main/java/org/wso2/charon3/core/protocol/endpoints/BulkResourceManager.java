@@ -22,6 +22,7 @@ import org.wso2.charon3.core.encoder.JSONDecoder;
 import org.wso2.charon3.core.encoder.JSONEncoder;
 import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.BadRequestException;
+import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.exceptions.PayloadTooLargeException;
 import org.wso2.charon3.core.objects.bulk.BulkRequestContent;
 import org.wso2.charon3.core.objects.bulk.BulkRequestData;
@@ -120,6 +121,8 @@ public class BulkResourceManager {
 
         } catch (AbstractCharonException e) {
             return AbstractResourceManager.encodeSCIMException(e);
+        } catch (Exception e) {
+            return AbstractResourceManager.encodeSCIMException(new CharonException(e.getMessage(), e));
         }
     }
 
@@ -136,7 +139,7 @@ public class BulkResourceManager {
      * the failOnErrors parameter is an optional parameter within the bulk-request. If omitted the bulk request will
      * process any operation even if some of the operations are failing. Otherwise the process will be aborted if the
      * failOnErrors value has been exceeded by the errorCount value.<br>
-     *
+     * <p>
      * this method was implemented based on the example found in RFC7644 chapter 3.7.3
      *
      * @param failOnErrors

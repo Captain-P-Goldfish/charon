@@ -46,7 +46,7 @@ import static org.wso2.charon3.core.utils.LambdaExceptionUtils.rethrowSupplier;
  */
 public class BulkResourceManager {
 
-    private Logger logger = LoggerFactory.getLogger(BulkResourceManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(BulkResourceManager.class);
 
     private JSONEncoder encoder = new JSONEncoder();
     private JSONDecoder decoder = new JSONDecoder();
@@ -131,7 +131,7 @@ public class BulkResourceManager {
      * the failOnErrors parameter is an optional parameter within the bulk-request. If omitted the bulk request will
      * process any operation even if some of the operations are failing. Otherwise the process will be aborted if the
      * failOnErrors value has been exceeded by the errorCount value.<br>
-     *
+     * <p>
      * this method was implemented based on the example found in RFC7644 chapter 3.7.3
      *
      * @param failOnErrors

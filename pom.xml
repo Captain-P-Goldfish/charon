@@ -27,7 +27,7 @@
     <groupId>org.wso2.charon</groupId>
     <artifactId>charon-parent</artifactId>
     <packaging>pom</packaging>
-    <version>3.1.31-SNAPSHOT</version>
+    <version>3.3.1-SNAPSHOT</version>
     <name>WSO2 Charon - Parent</name>
     <description>WSO2 Charon - SCIM Implementation</description>
     <url>http://wso2.com</url>
@@ -52,11 +52,6 @@
                 <groupId>org.json.wso2</groupId>
                 <artifactId>json</artifactId>
                 <version>${json.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>${commons.logging.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.ws.commons.axiom</groupId>
@@ -164,6 +159,19 @@
                 <groupId>com.google.code.findbugs</groupId>
                 <artifactId>annotations</artifactId>
                 <version>${findbugs.annotations.version}</version>
+            </dependency>
+
+            <!-- Pax Logging -->
+            <dependency>
+                <groupId>org.ops4j.pax.logging</groupId>
+                <artifactId>pax-logging-api</artifactId>
+                <version>${pax.logging.api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-1.2-api</artifactId>
+                <version>${log4j.api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -379,12 +387,9 @@
     </profiles>
 
     <properties>
-        <charon.parent.version>3.0.0-SNAPSHOT</charon.parent.version>
-        <charon.parent.package.export.version>${charon.parent.version}</charon.parent.package.export.version>
         <commons-logging.osgi.version.range>[1.2,2.0)</commons-logging.osgi.version.range>
         <axiom.osgi.version.range>[1.2.11, 2.0.0)</axiom.osgi.version.range>
         <json.version>3.0.0.wso2v1</json.version>
-        <commons.logging.version>1.2</commons.logging.version>
         <axiom.api.version>1.2.22</axiom.api.version>
         <axiom.impl.version>1.2.11</axiom.impl.version>
         <servlet.api.version>2.5</servlet.api.version>
@@ -423,6 +428,12 @@
         <commons.lang3.version>3.8.1</commons.lang3.version>
 
         <findbugs.annotations.version>3.0.1</findbugs.annotations.version>
+        <maven.findbugsplugin.version>3.0.4</maven.findbugsplugin.version>
+
+        <!-- Pax Logging Version -->
+        <pax.logging.api.version>1.10.1</pax.logging.api.version>
+
+        <log4j.api.version>2.12.0</log4j.api.version>
     </properties>
 
 </project>

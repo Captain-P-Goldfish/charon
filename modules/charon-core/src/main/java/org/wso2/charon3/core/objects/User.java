@@ -709,22 +709,40 @@ public class User extends AbstractSCIMObject {
                 .getStringValue() : null;
     }
 
+    private void setGroup(ComplexAttribute groupPropertiesAttribute) throws BadRequestException {
+
+        MultiValuedAttribute groupsAttribute;
+
+        if (this.attributeList.containsKey(SCIMConstants.UserSchemaConstants.GROUPS)) {
+            groupsAttribute = (MultiValuedAttribute) this.attributeList.get(SCIMConstants.UserSchemaConstants.GROUPS);
+            groupsAttribute.setAttributeValue(groupPropertiesAttribute);
+        } else {
+            groupsAttribute = new MultiValuedAttribute(SCIMConstants.UserSchemaConstants.GROUPS);
+            groupsAttribute.setAttributeValue(groupPropertiesAttribute);
+            groupsAttribute = (MultiValuedAttribute) DefaultAttributeFactory
+                    .createAttribute(SCIMSchemaDefinitions.SCIMUserSchemaDefinition.GROUPS, groupsAttribute);
+            this.attributeList.put(SCIMConstants.UserSchemaConstants.GROUPS, groupsAttribute);
+        }
+
+    }
+
     /**
-     * set the associated groups of the user.
+     * Set the associated groups of the user.
+     * According to the SCIM specification need to add display, value and ref attributes.
      *
-     * @param type
-     * @param value
-     * @param display
+     * @param type  Type of resource.
+     * @param group Group object.
      * @throws CharonException
      * @throws BadRequestException
      */
-    public void setGroup(String type,
-                         String value,
-                         String display) throws CharonException, BadRequestException {
-
+    public void setGroup(String type, Group group) throws CharonException, BadRequestException {
         SimpleAttribute typeSimpleAttribute = null;
         SimpleAttribute valueSimpleAttribute = null;
         SimpleAttribute displaySimpleAttribute = null;
+        SimpleAttribute referenceSimpleAttribute = null;
+        String reference = group.getLocation();
+        String value = group.getId();
+        String display = group.getDisplayName();
         ComplexAttribute complexAttribute = new ComplexAttribute();
         if (type != null) {
             typeSimpleAttribute = new SimpleAttribute(SCIMConstants.CommonSchemaConstants.TYPE, type);
@@ -740,6 +758,13 @@ public class User extends AbstractSCIMObject {
             complexAttribute.setSubAttribute(valueSimpleAttribute);
         }
 
+        if (reference != null) {
+            referenceSimpleAttribute = new SimpleAttribute(SCIMConstants.CommonSchemaConstants.REF, reference);
+            DefaultAttributeFactory
+                    .createAttribute(SCIMSchemaDefinitions.SCIMGroupSchemaDefinition.REF, referenceSimpleAttribute);
+            complexAttribute.setSubAttribute(referenceSimpleAttribute);
+        }
+
         if (display != null) {
             displaySimpleAttribute = new SimpleAttribute(SCIMConstants.CommonSchemaConstants.DISPLAY, display);
             displaySimpleAttribute = (SimpleAttribute) DefaultAttributeFactory
@@ -747,6 +772,7 @@ public class User extends AbstractSCIMObject {
                             displaySimpleAttribute);
             complexAttribute.setSubAttribute(displaySimpleAttribute);
         }
+
         if (complexAttribute.getSubAttributesList().size() != 0) {
             Object typeVal = SCIMConstants.DEFAULT;
             Object valueVal = SCIMConstants.DEFAULT;
@@ -762,23 +788,6 @@ public class User extends AbstractSCIMObject {
                     .createAttribute(SCIMSchemaDefinitions.SCIMUserSchemaDefinition.GROUPS, complexAttribute);
             setGroup(complexAttribute);
         }
-    }
-
-    private void setGroup(ComplexAttribute groupPropertiesAttribute) throws CharonException, BadRequestException {
-
-        MultiValuedAttribute groupsAttribute;
-
-        if (this.attributeList.containsKey(SCIMConstants.UserSchemaConstants.GROUPS)) {
-            groupsAttribute = (MultiValuedAttribute) this.attributeList.get(SCIMConstants.UserSchemaConstants.GROUPS);
-            groupsAttribute.setAttributeValue(groupPropertiesAttribute);
-        } else {
-            groupsAttribute = new MultiValuedAttribute(SCIMConstants.UserSchemaConstants.GROUPS);
-            groupsAttribute.setAttributeValue(groupPropertiesAttribute);
-            groupsAttribute = (MultiValuedAttribute) DefaultAttributeFactory
-                    .createAttribute(SCIMSchemaDefinitions.SCIMUserSchemaDefinition.GROUPS, groupsAttribute);
-            this.attributeList.put(SCIMConstants.UserSchemaConstants.GROUPS, groupsAttribute);
-        }
-
     }
 
     /**
